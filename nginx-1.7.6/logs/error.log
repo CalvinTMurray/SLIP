@@ -104,3 +104,4 @@
 2014/10/07 17:33:50 [error] 9088#9112: *1 CreateFile() "C:\Users\Calvin . T . Murray\Documents\GitHub\SLIP\nginx-1.7.6/SLIP-WebClient/public/favicon.ico" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost"
 2014/10/07 17:39:53 [notice] 7236#7572: signal process started
 2014/10/07 17:45:30 [notice] 8312#8472: signal process started
+2014/10/07 18:43:59 [notice] 8724#4400: signal process started

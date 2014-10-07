@@ -1,10 +1,9 @@
 
 # Java compiled classes
 *.class
-<<<<<<< HEAD
+
 RemoteSystemsTempFiles
-=======
 
 # Compiled files
 /bin
->>>>>>> 929027b5384f91e9310f57659f4b593dc3b27e80
+
