@@ -1,0 +1,16 @@
+<!doctype html>
+<html data-ng-app = "appM">
+	<head>
+		<title>Hello AngularJS</title>
+		<script src="angular.min.js"></script>
+    	<script src="hello.js"></script>
+	</head>
+
+	<body>
+		<div data-ng-controller="Hello">
+			<p>The ID is {{greeting.id}}</p>
+			<p>The content is {{greeting.content}}</p>
+			<p>The time on the server is {{greeting.time}}</p>
+		</div>
+	</body>
+</html>
