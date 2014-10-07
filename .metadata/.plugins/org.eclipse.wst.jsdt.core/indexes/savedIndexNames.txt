@@ -1,7 +1,0 @@
-INDEX VERSION 1.3+C:\Users\Calvin . T . Murray\Documents\GitHub\SLIP\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-3619891859.index
-1638116402.index
-4206762315.index
-3960352622.index
-3891832812.index
-1771974338.index
