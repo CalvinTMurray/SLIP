@@ -71,3 +71,5 @@ $RECYCLE.BIN/
 RemoteSystemsTempFiles/
 
 .metadata
+
+nginx-1.6.2/*
