@@ -21,5 +21,5 @@ controller('Hello', function($scope, $http, $timeout) {
 
   // Kick off the interval
   $scope.intervalFunction();
-
+  
 });
