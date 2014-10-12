@@ -4,7 +4,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-@ComponentScan("hello, frame")
+@ComponentScan({"hello", "frame"})
 @EnableAutoConfiguration
 public class Application {
 
