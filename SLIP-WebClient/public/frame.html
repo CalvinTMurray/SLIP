@@ -1,0 +1,28 @@
+<!doctype html>
+<html data-ng-app="appN">
+<head>
+<title>Hello AngularJS</title>
+<script src="angular.min.js"></script>
+<script src="frame.js"></script>
+
+</head>
+
+<body>
+	<div data-ng-controller="Frame">
+		<table>
+			<thead>
+				<tr>
+					<th>x</th>
+					<th>y</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="payload in payloads">
+					<td>{{payload.x}}</td>
+					<td>{{payload.y}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
