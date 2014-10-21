@@ -37,7 +37,7 @@ public class GameQueries implements GameDAO {
 
 	@Override
 	public List<ServerPayload> getAllPayloads(int sessionID) {
-		String sql =	"SELECT \"SessionID\", \"xPosition\", \"yPosition\" " +
+		String sql =	"SELECT \"SessionID\", \"xPosition\", \"yPosition\", \"Timestamp\" " +
 				"FROM \"Game\" " + 
 				"WHERE \"SessionID\" = ?";
 
@@ -57,8 +57,8 @@ public class GameQueries implements GameDAO {
 
 	@Override
 	public void insertFrame(ServerFrame frame) {
-		String sql = 	"INSERT INTO \"Game\" (\"SessionID\", \"xPosition\", \"yPosition\") " +
-						"VALUES (?,?,?)";
+		String sql = 	"INSERT INTO \"Game\" (\"SessionID\", \"xPosition\", \"yPosition\", \"Timestamp\") " +
+						"VALUES (?,?,?,?)";
 
 		int sessionID = frame.getSessionID();
 
@@ -71,6 +71,7 @@ public class GameQueries implements GameDAO {
 				ps.setLong(1, sessionID);
 				ps.setInt(2, payload.getX());
 				ps.setInt(3, payload.getY());
+				ps.setLong(4, payload.getTimestamp());
 
 				System.out.println("Inserting payload with session ID: " + sessionID + " x Position: " + payload.getX()
 						+ " y Position: " + payload.getY());
@@ -85,13 +86,23 @@ public class GameQueries implements GameDAO {
 
 	@Override
 	public void insertPayload(int sessionID, ServerPayload payload) {
-
 		String sql = 	"INSERT INTO \"Game\" (\"SessionID\", \"xPosition\", \"yPosition\") " +
 						"VALUES (?,?,?)";
 
 		jdbcTemplateObject.update(sql, sessionID, payload.getX(), payload.getY());
-
-		// TODO Auto-generated method stub
-
+		
 	}
+
+	@Override
+	public List<ServerPayload> getPayloadsRange(int sessionID, long timestamp) {
+		String sql =	"SELECT \"SessionID\", \"xPosition\", \"yPosition\", \"Timestamp\" " +
+						"FROM \"Game\" " +
+						"WHERE \"SessionID\" = ? AND \"Timestamp\" > ?";
+		
+		List<ServerPayload> payloads = jdbcTemplateObject.query(sql, new Object[] {sessionID, timestamp},  new ServerPayloadMapper());
+		
+		System.out.println("Executed getPayloadsRange");
+		return payloads;
+	}
+	
 }

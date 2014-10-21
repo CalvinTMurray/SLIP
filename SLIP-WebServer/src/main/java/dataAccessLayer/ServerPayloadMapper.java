@@ -15,6 +15,7 @@ public class ServerPayloadMapper implements RowMapper<ServerPayload>{
     
     payload.setX(rs.getInt("xPosition"));
     payload.setY(rs.getInt("yPosition"));
+    payload.setTimestamp(rs.getLong("Timestamp"));
     
     return payload;
   }

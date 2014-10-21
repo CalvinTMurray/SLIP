@@ -2,12 +2,21 @@ package test;
 
 public class ServerPayload {
 
+	private long timestamp;
 	private int x;
 	private int y;
 	private boolean[] stateValues;
 
 	public int getX() {
 		return x;
+	}
+
+	public long getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	public int getY() {

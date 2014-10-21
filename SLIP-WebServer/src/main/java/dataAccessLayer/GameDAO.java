@@ -43,4 +43,11 @@ public interface GameDAO {
    */
   public void insertPayload(int sessionID, ServerPayload payload);
   
+  /**
+   * Return all the payloads that arrived later than the given timestamp
+   * @param sessionID
+   * @param timestamp
+   */
+  public List<ServerPayload> getPayloadsRange(int sessionID, long timestamp);
+  
 }

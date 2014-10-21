@@ -53,7 +53,7 @@
     
 
     <properties>
-        <start-class>dataAccessLayer.DataAccessLayerTest</start-class>
+        <start-class>hello.Application</start-class>
     </properties>
 
     <build>

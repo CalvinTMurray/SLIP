@@ -33,7 +33,7 @@ public class DataAccessLayerTest {
 //		Connection connection = null;
 //		try {
 //			 
-//			connection = DriverManager.getConnection(
+//			connection = DriverManager.getConnection(§
 //					"jdbc:postgresql://localhost:5432/SLIP", "postgres",
 //					"SPORT");
 // 
