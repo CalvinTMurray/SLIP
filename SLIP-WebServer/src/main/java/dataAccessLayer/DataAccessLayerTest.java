@@ -9,8 +9,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
-import test.ProspeckzFrame;
-import test.ProspeckzPayload;
+import test.ServerFrame;
+import test.ServerPayload;
 import di.configuration.DIConfiguration;
 
 @ComponentScan({ "dataAccessLayer", "di.configuration" })
@@ -66,17 +66,17 @@ public class DataAccessLayerTest {
 //		}
 		
 
-		ProspeckzPayload payload =  new ProspeckzPayload();
+		ServerPayload payload =  new ServerPayload();
 //		payload.setReceiver_one(1);
 //		payload.setReceiver_two(1);
 //		payload.setReceiver_three(1);
 //		payload.setReceiver_four(1);
 //		payload.setTimestamp(1);
 
-		ArrayList<ProspeckzPayload> payloads = new ArrayList<>();
+		ArrayList<ServerPayload> payloads = new ArrayList<>();
 		payloads.add(payload);
 		
-		ProspeckzFrame frame = new ProspeckzFrame();
+		ServerFrame frame = new ServerFrame();
 		frame.setSessionID(4);
 		
 		frame.setPayloads(payloads);

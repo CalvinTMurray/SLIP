@@ -35,4 +35,9 @@ public class DIConfiguration {
 		return dataSource;
 	}
 	
+//	@Bean
+//	public ProspeckzFrameDAO getDAO() {
+//		return new ProspeckzFrameQueries(getDataSource());
+//	}
+	
 }
