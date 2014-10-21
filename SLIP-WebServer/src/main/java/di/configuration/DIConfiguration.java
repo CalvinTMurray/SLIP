@@ -3,6 +3,8 @@
  */
 package di.configuration;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +15,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
  *
  */
 @Configuration
-@ComponentScan(value = {"dataAccessLayer"})
+@ComponentScan(basePackages = {"dataAccessLayer", "di.configuration"})
 public class DIConfiguration {
 	
 	private static final String host = "localhost";
@@ -23,7 +25,8 @@ public class DIConfiguration {
 	private static final String password = "SPORT";
 	
 	@Bean
-	public DriverManagerDataSource dataSource(){
+	public DataSource getDataSource(){
+		System.out.println("Bean created");
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.postgresql.Driver");  
 		dataSource.setUrl("jdbc:postgresql://" + host + ":" + port + "/"+ dbName + "?autoReconnect=true");  
@@ -31,4 +34,5 @@ public class DIConfiguration {
 		dataSource.setPassword(password);
 		return dataSource;
 	}
+	
 }

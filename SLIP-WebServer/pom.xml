@@ -24,12 +24,36 @@
         <artifactId>spring-data-oracle</artifactId>
         <version>1.0.0.RELEASE</version>
     	</dependency>
+        <dependency>
+        	<groupId>com.google.inject</groupId>
+        	<artifactId>guice</artifactId>
+        	<version>2.0</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-starter-batch</artifactId>
+        </dependency>
+        <dependency>
+        	<groupId>org.postgresql</groupId>
+        	<artifactId>postgresql</artifactId>
+        	<version>9.3-1102-jdbc41</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.scala-lang</groupId>
+        	<artifactId>scala-library</artifactId>
+        	<version>2.10.4</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.scala-lang</groupId>
+        	<artifactId>scala-library</artifactId>
+        	<version>2.10.4</version>
+        </dependency>
     </dependencies>
     
     
 
     <properties>
-        <start-class>hello.Application</start-class>
+        <start-class>dataAccessLayer.DataAccessLayerTest</start-class>
     </properties>
 
     <build>
