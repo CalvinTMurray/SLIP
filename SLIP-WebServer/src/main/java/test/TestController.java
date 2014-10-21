@@ -62,7 +62,7 @@ public class TestController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/payloads")
-    public List<ServerPayload> payloads(@RequestParam(value="timestamp", required=false, defaultValue="0") int timestamp) {
+    public List<ServerPayload> payloads(@RequestParam(value="timestamp", required=false, defaultValue="0") long timestamp) {
         System.out.println("Requesting payloads");
 		return userJDBCTemplate.getPayloadsRange(0, timestamp);
         
