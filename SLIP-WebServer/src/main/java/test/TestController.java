@@ -18,4 +18,22 @@ public class TestController {
 
 	}
 
+	@RequestMapping(method = RequestMethod.POST, value = "/pframe", headers = { "Content-type=application/json" }, produces = { "application/json" })
+	public @ResponseBody String pframe(@RequestBody ProspeckzFrame frame) {
+
+		System.out.println(frame);
+
+		return "Posting frame handled";
+
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/ppayload", headers = { "Content-type=application/json" }, produces = { "application/json" })
+	public @ResponseBody String ppayload(@RequestBody ProspeckzPayload payload) {
+
+		System.out.println(payload);
+
+		return "Posting payload handled";
+
+	}
+
 }
