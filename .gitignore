@@ -76,3 +76,5 @@ nginx-1.6.2/*
 
 *.project
 *.tern-project
+
+.DS_Store
