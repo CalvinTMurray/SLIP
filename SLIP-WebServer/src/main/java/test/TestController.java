@@ -3,6 +3,7 @@ package test;
 import hello.Greeting;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
@@ -22,8 +23,29 @@ import di.configuration.DIConfiguration;
 public class TestController {
 
 //	private ArrayList<ServerPayload> payloads = new ArrayList<ServerPayload>();
-	private ApplicationContext ctx = new AnnotationConfigApplicationContext(DIConfiguration.class);
-	private GameDAO userJDBCTemplate = ctx.getBean(GameQueries.class);
+//	private ApplicationContext ctx = new AnnotationConfigApplicationContext(DIConfiguration.class);
+	//private GameDAO userJDBCTemplate = ctx.getBean(GameQueries.class);
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/ping", headers = { "Content-type=application/json" }, produces = { "application/json" })
+	public @ResponseBody String ping(@RequestBody String timestamp) {
+		System.out.println("Responding to ping");
+		
+		return Long.toString(System.currentTimeMillis());
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/payloadtest", headers = { "Content-type=application/json" }, produces = { "application/json" })
+	public @ResponseBody String payloadtest(@RequestBody ServerFrame frame) {
+		List<ServerPayload> receivedPayloads = frame.getPayloads();
+		Collections.sort(receivedPayloads);
+		Collections.reverse(receivedPayloads);
+		
+		for (ServerPayload payload : receivedPayloads) {
+			System.out.println("t: " + payload.getTimestamp() + " X: " + payload.getX() + " Y: " + payload.getY());
+		}
+		
+		System.out.println("Payloads included in frame: " + receivedPayloads.size());
+		return "Post handled";
+	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/test", headers = { "Content-type=application/json" }, produces = { "application/json" })
 	public @ResponseBody String test(@RequestBody String payload) {
@@ -38,7 +60,7 @@ public class TestController {
 	public @ResponseBody String sframe(@RequestBody ServerFrame frame) {
 
 		
-		userJDBCTemplate.insertFrame(frame);
+		//userJDBCTemplate.insertFrame(frame);
 //		System.out.println(frame.toString());
 //
 //		List<ServerPayload> receivedPayloads = frame.getPayloads();
@@ -61,12 +83,12 @@ public class TestController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/payloads")
-    public List<ServerPayload> payloads(@RequestParam(value="timestamp", required=false, defaultValue="0") long timestamp) {
-        System.out.println("Requesting payloads");
-		return userJDBCTemplate.getPayloadsRange(0, timestamp);
-        
-    }
+//	@RequestMapping(method = RequestMethod.GET, value = "/payloads")
+//    public List<ServerPayload> payloads(@RequestParam(value="timestamp", required=false, defaultValue="0") long timestamp) {
+//        System.out.println("Requesting payloads");
+//		return userJDBCTemplate.getPayloadsRange(0, timestamp);
+//        
+//    }
 	
 //	@RequestMapping(method = RequestMethod.GET, value = "/payloads")
 //	public List<ServerPayload> payloads() {

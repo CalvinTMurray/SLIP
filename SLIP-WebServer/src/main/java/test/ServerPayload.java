@@ -1,6 +1,6 @@
 package test;
 
-public class ServerPayload {
+public class ServerPayload implements Comparable {
 
 	private long timestamp;
 	private int x;
@@ -37,6 +37,24 @@ public class ServerPayload {
 
 	public void setStateValues(boolean[] stateValues) {
 		this.stateValues = stateValues;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		if (!(o instanceof ServerPayload))
+			return 0;
+		
+		ServerPayload payload = (ServerPayload) o;
+		if (payload.timestamp < this.timestamp)
+			return -1;
+		
+		if (payload.timestamp > this.timestamp)
+			return 1;
+		
+		if (payload.timestamp == this.timestamp)
+			return 0;
+		
+		return 0;
 	}
 
 }
