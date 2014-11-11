@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SPORT Integration 1</title>
+<title>SPORT Integration 2</title>
 <link href="assets/css/bootstrap.min.css" rel="stylesheet">
 <script src="angular.min.js"></script>
 <script src="frame.js"></script>
@@ -31,29 +31,28 @@
         </div>
     </div>
 
-    <div data-ng-controller="Frame" class="container">
-        <div class="main">
-            <p><h2>Integration 1</h2></p>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>x</th>
-                        <th>y</th>
-                        <th>timestamp</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-ng-repeat="payload in payloads">
-                        <td>{{payload.x}}</td>
-                        <td>{{payload.y}}</td>
-                        <td>{{payload.timestamp}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+	<div data-ng-controller="Frame" class="container">
+		<div class="main">
+			<p><h2>Integration 1</h2></p>
 
-    <script src="assets/js/jquery-2.1.1.min.js"></script>
+			<table class="table">
+				<tr>
+					<th>x Position</th>
+					<th>y Position</th>
+					<th>timestamp</th>
+				</tr>
+
+				<tr data-ng-repeat="payload in payloads">
+					<td data-title="x Position">{{payload.x}}</td>
+					<td data-title="y Position">{{payload.y}}</td>
+					<td data-title="timestamp">{{payload.timestamp}}</td>
+				</tr>
+			</table>
+			
+		</div>
+	</div>
+
+	<script src="assets/js/jquery-2.1.1.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
 </body>
 </html>
