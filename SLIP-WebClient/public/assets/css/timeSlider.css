@@ -1,0 +1,16 @@
+/*
+* CSS sheet for time slider UI component
+*/
+.well {
+	background-color: #000000;
+}
+
+#timeSliderValue {
+	color: #ffffff;
+	margin-left: 45px;
+}
+
+#timeSliderValueLabel {
+	margin-left: 45px;
+	color: #ffffff;
+}
