@@ -73,7 +73,7 @@ public class DataAccessLayerTest {
 //		payload.setReceiver_four(1);
 //		payload.setTimestamp(1);
 
-		ArrayList<ServerPayload> payloads = new ArrayList<>();
+		ArrayList<ServerPayload> payloads = new ArrayList<ServerPayload>();
 		payloads.add(payload);
 		
 		ServerFrame frame = new ServerFrame();

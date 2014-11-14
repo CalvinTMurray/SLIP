@@ -19,10 +19,6 @@ public class GameQueries implements GameDAO {
 
 	private JdbcTemplate jdbcTemplateObject;
 
-	//  public ServerFrameQueries(DataSource dataSource) {
-	//    jdbcTemplateObject = new JdbcTemplate(dataSource);
-	//  }
-
 	@Autowired
 	@Override
 	public void setDataSource(DataSource dataSource) {
@@ -56,11 +52,11 @@ public class GameQueries implements GameDAO {
 	}
 
 	@Override
-	public void insertFrame(ServerFrame frame) {
+	public void insertFrame(final ServerFrame frame) {
 		String sql = 	"INSERT INTO \"Game\" (\"SessionID\", \"xPosition\", \"yPosition\", \"Timestamp\") " +
 						"VALUES (?,?,?,?)";
 
-		int sessionID = frame.getSessionID();
+		final int sessionID = frame.getSessionID();
 
 		jdbcTemplateObject.batchUpdate(sql, new BatchPreparedStatementSetter() {
 
@@ -104,5 +100,19 @@ public class GameQueries implements GameDAO {
 		System.out.println("Executed getPayloadsRange");
 		return payloads;
 	}
-	
+
+	@Override
+	public long getNewSessionID() {
+		String sql = 	"SELECT MAX(\"SessionID\") " +
+						"FROM \"Game\"";
+		
+		Long currentMaximumSessionID = jdbcTemplateObject.queryForObject(sql, Long.class);
+		
+		// Null check if there is no records in the database
+		if (currentMaximumSessionID == null) {
+			currentMaximumSessionID = (long) 0;
+		}
+		
+		return (currentMaximumSessionID + 1);
+	}
 }

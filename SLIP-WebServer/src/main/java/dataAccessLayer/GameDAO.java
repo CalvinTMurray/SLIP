@@ -50,4 +50,9 @@ public interface GameDAO {
    */
   public List<ServerPayload> getPayloadsRange(int sessionID, long timestamp);
   
+  /**
+   * 
+   * @return the next session ID that has not been used in the DB
+   */
+  public long getNewSessionID();
 }
