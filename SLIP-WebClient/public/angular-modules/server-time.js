@@ -1,5 +1,5 @@
-angular.module('appM', []).
-controller('Hello', function($scope, $http, $timeout) {
+angular.module('applicationServerTime', []).
+controller('server-time-controller', function($scope, $http, $timeout) {
 
   // Function to get the data
   $scope.getData = function(){

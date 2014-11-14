@@ -53,7 +53,7 @@
     
 
     <properties>
-        <start-class>hello.Application</start-class>
+        <start-class>main.Application</start-class>
     </properties>
 
     <build>

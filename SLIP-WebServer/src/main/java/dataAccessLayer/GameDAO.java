@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import test.ServerFrame;
-import test.ServerPayload;
+import receivedAppData.ServerFrame;
+import receivedAppData.ServerPayload;
 //@Repository
 public interface GameDAO {
   
@@ -48,7 +48,7 @@ public interface GameDAO {
    * @param sessionID
    * @param timestamp
    */
-  public List<ServerPayload> getPayloadsRange(int sessionID, long timestamp);
+  public List<ServerPayload> getPayloadsRange(long sessionID, long timestamp);
   
   /**
    * 

@@ -1,7 +1,9 @@
-package statistics;
+package charts;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import statistics.PositionPoint;
 
 public class HighChartScatterPlot {
 

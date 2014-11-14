@@ -2,6 +2,8 @@ package statistics;
 
 import java.util.List;
 
+import charts.AbstractChart;
+
 public class Statistics {
 	
 	private long sessionID;

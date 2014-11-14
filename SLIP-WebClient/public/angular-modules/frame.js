@@ -1,5 +1,5 @@
-angular.module('appN', []).
-controller('Frame', function($scope, $http, $timeout) {
+angular.module('firstIntegrationModule', []).
+controller('Data', function($scope, $http, $timeout) {
 	
 	var allData = [];
 	var lastTimestamp = 0;
@@ -16,7 +16,7 @@ controller('Frame', function($scope, $http, $timeout) {
 			lastTimestamp = data[totalData - 1].timestamp;
 			
 			
-//			$("html, body").animate({ scrollTop: $(document).height() }, "slow");
+			$("html, body").animate({ scrollTop: $(document).height() }, "slow");
 			
 			console.log('Fetched data!');
 		});
@@ -29,8 +29,7 @@ controller('Frame', function($scope, $http, $timeout) {
 			$scope.intervalFunction();
 		}, 1000)
 	};
-
-
+	
 	$scope.intervalFunction();
-
+	
 });

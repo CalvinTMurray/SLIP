@@ -58,7 +58,7 @@ public class StatisticsQueries {
 						"FROM ( " +
 						"SELECT \"PayloadID\", \"xPosition\", \"yPosition\", abs(\"Timestamp\" - ?) AS \"TimeDifference\" " +
 						"FROM \"Game\" " +
-						"WHERE \"Timestamp\" > ? AND \"Timestamp\" < ? AND \"SessionID\" = ? " +
+						"WHERE \"Timestamp\" >= ? AND \"Timestamp\" <= ? AND \"SessionID\" = ? " +
 						"ORDER BY \"TimeDifference\"" +
 						") AS \"ClosestPosition\" " +
 						"LIMIT 1";
@@ -75,7 +75,6 @@ public class StatisticsQueries {
 						
 						return new PositionPoint(x,y);
 					}
-			 
 		 });
 	}	
 }

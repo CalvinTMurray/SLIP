@@ -11,8 +11,8 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import test.ServerFrame;
-import test.ServerPayload;
+import receivedAppData.ServerFrame;
+import receivedAppData.ServerPayload;
 
 @Repository
 public class GameQueries implements GameDAO {
@@ -90,7 +90,7 @@ public class GameQueries implements GameDAO {
 	}
 
 	@Override
-	public List<ServerPayload> getPayloadsRange(int sessionID, long timestamp) {
+	public List<ServerPayload> getPayloadsRange(long sessionID, long timestamp) {
 		String sql =	"SELECT \"SessionID\", \"xPosition\", \"yPosition\", \"Timestamp\" " +
 						"FROM \"Game\" " +
 						"WHERE \"SessionID\" = ? AND \"Timestamp\" > ?";

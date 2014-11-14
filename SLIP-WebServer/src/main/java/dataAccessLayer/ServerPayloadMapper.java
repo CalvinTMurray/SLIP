@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import test.ServerPayload;
+import receivedAppData.ServerPayload;
 
 public class ServerPayloadMapper implements RowMapper<ServerPayload>{
 
@@ -13,9 +13,9 @@ public class ServerPayloadMapper implements RowMapper<ServerPayload>{
   public ServerPayload mapRow(ResultSet rs, int rowNum) throws SQLException {
     ServerPayload payload = new ServerPayload();
     
+    payload.setTimestamp(rs.getLong("Timestamp"));
     payload.setX(rs.getInt("xPosition"));
     payload.setY(rs.getInt("yPosition"));
-    payload.setTimestamp(rs.getLong("Timestamp"));
     
     return payload;
   }

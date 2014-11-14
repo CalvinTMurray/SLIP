@@ -1,4 +1,4 @@
-package statistics;
+package charts;
 
 
 public abstract class AbstractChart {

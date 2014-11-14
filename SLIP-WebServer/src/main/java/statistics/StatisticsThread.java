@@ -3,15 +3,16 @@
  */
 package statistics;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import charts.HighChartScatterPlot;
 import statistics.Time.TimeValue;
 import dataAccessLayer.StatisticsQueries;
 import di.configuration.DIConfiguration;
@@ -38,7 +39,7 @@ public class StatisticsThread implements Runnable {
 		newSessions = new ConcurrentLinkedQueue<Long>();
 		completedSessions = new ConcurrentLinkedQueue<Long>();
 		
-		pendingSessions = new HashMap<Long, Statistics>();
+		pendingSessions = new ConcurrentHashMap<Long, Statistics>();
 	}
 	
 	public static StatisticsThread getInstance() {
@@ -68,12 +69,13 @@ public class StatisticsThread implements Runnable {
 			while (((sessionID = completedSessions.poll()) != null)) {
 				System.out.println("Processing statistics for SessionID: " + sessionID);
 				Statistics statistics = pendingSessions.get(sessionID);
-				
 			}
 		}
 	}
 	
 	public HighChartScatterPlot createHighChartScatterPlot(long sessionID) {
+		HighChartScatterPlot chart = new HighChartScatterPlot();
+
 		long startTime = statisticsQueries.getMinTime(sessionID);
 		long endTime = statisticsQueries.getMaxTime(sessionID);
 
@@ -88,16 +90,16 @@ public class StatisticsThread implements Runnable {
 		System.out.println("endTime: " + endTime);
 		System.out.println("Game duration: " + duration);
 		
-		HighChartScatterPlot chart = new HighChartScatterPlot();
-		
 		for (int i = 0; i < timeSlices.size(); i++) {
 			PositionPoint point;
+			long currentTimeSlice = timeSlices.get(i);
+			
 			if (i == 0) {
-				point = statisticsQueries.getClosestPoint(sessionID, startTime, 0, timeSlices.get(i+1));
+				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, 0, timeSlices.get(i+1));
 			} else if (i == timeSlices.size() - 1) {
-				point = statisticsQueries.getClosestPoint(sessionID, timeSlices.get(i), timeSlices.get(i - 1), endTime);
+				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), endTime);
 			} else {
-				point = statisticsQueries.getClosestPoint(sessionID, timeSlices.get(i), timeSlices.get(i - 1), timeSlices.get(i + 1));
+				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), timeSlices.get(i + 1));
 			}
 			
 			chart.addData(timeSlices.get(i), point);

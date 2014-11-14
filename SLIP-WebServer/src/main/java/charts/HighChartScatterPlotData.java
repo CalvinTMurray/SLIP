@@ -1,4 +1,6 @@
-package statistics;
+package charts;
+
+import statistics.PositionPoint;
 
 public class HighChartScatterPlotData {
 

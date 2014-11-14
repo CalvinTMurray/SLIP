@@ -1,4 +1,4 @@
-package test;
+package receivedAppData;
 
 public class ServerPayload {
 
@@ -7,9 +7,6 @@ public class ServerPayload {
 	private int y;
 	private boolean[] stateValues;
 
-	public int getX() {
-		return x;
-	}
 
 	public long getTimestamp() {
 		return timestamp;
@@ -17,10 +14,6 @@ public class ServerPayload {
 
 	public void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
-	}
-
-	public int getY() {
-		return y;
 	}
 
 	public boolean[] getStateValues() {
@@ -31,8 +24,16 @@ public class ServerPayload {
 		this.x = x;
 	}
 
+	public int getX() {
+		return x;
+	}
+
 	public void setY(int y) {
 		this.y = y;
+	}
+	
+	public int getY() {
+		return y;
 	}
 
 	public void setStateValues(boolean[] stateValues) {

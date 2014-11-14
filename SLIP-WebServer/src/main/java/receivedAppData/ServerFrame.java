@@ -1,4 +1,4 @@
-package test;
+package receivedAppData;
 
 import java.util.List;
 

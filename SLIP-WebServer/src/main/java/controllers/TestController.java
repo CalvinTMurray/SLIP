@@ -1,6 +1,5 @@
-package test;
+package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
@@ -12,13 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import statistics.HighChartScatterPlot;
-import statistics.HighChartScatterPlotData;
-import statistics.PositionPoint;
+import charts.HighChartScatterPlot;
+import receivedAppData.ServerFrame;
+import receivedAppData.ServerPayload;
 import statistics.StatisticsThread;
 import dataAccessLayer.GameDAO;
 import dataAccessLayer.GameQueries;
-import dataAccessLayer.StatisticsQueries;
 import di.configuration.DIConfiguration;
 
 @RestController
@@ -27,7 +25,6 @@ public class TestController {
 //	private ArrayList<ServerPayload> payloads = new ArrayList<ServerPayload>();
 	private ApplicationContext ctx = new AnnotationConfigApplicationContext(DIConfiguration.class);
 	private GameDAO userJDBCTemplate = ctx.getBean(GameQueries.class);
-	private StatisticsQueries statisticsQueries = ctx.getBean(StatisticsQueries.class);
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/test", headers = { "Content-type=application/json" }, produces = { "application/json" })
 	public @ResponseBody String test(@RequestBody String payload) {
@@ -58,10 +55,12 @@ public class TestController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/payloads")
-    public List<ServerPayload> payloads(@RequestParam(value="timestamp", required=false, defaultValue="0") long timestamp) {
-        System.out.println("Requesting payloads");
-		return userJDBCTemplate.getPayloadsRange(0, timestamp);
+    public List<ServerPayload> payloads(@RequestParam(value="session-id", required=true) long sessionID, 
+    		@RequestParam(value="timestamp", required=false, defaultValue="0") long timestamp) {
         
+		System.out.println("Requesting payloads");
+        
+		return userJDBCTemplate.getPayloadsRange(sessionID, timestamp);
     }
 	
 	class SessionID {
@@ -107,10 +106,10 @@ public class TestController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/position-data", produces = { "application/json" })
-    public @ResponseBody HighChartScatterPlot getData() {
+    public @ResponseBody HighChartScatterPlot getData(@RequestParam (value = "sessionID", required = false) long sessionID) {
 		
 		
-		long sessionID = userJDBCTemplate.getNewSessionID() - 1;
+		sessionID = userJDBCTemplate.getNewSessionID() - 1;
 		
 		return StatisticsThread.getInstance().createHighChartScatterPlot(sessionID);
     }

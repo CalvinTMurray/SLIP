@@ -1,4 +1,4 @@
-package statistics;
+package charts;
 
 public class FusionChartsLineGraph extends AbstractChart {
 

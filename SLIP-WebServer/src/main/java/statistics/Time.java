@@ -35,13 +35,9 @@ public class Time {
 		List<Long> timeSlices = new ArrayList<Long>();
 		
 		// Time slice up to the endTime
-		for (long i = startTime; i < endTime; i = i + interval) {
-			long timeSlice = i;
-			timeSlices.add(timeSlice);
+		for (long i = startTime; i <= endTime; i = i + interval) {
+			timeSlices.add(i);
 		}
-		
-		// Add the endTime
-		timeSlices.add(endTime);
 		
 		System.out.println("Size of timeSlices: " + timeSlices.size());
 		return timeSlices;

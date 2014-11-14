@@ -1,4 +1,6 @@
-package hello;
+package controllers;
+
+import integrationOne.Greeting;
 
 import java.util.concurrent.atomic.AtomicLong;
 

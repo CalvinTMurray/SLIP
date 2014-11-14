@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+<base href = "../"/>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,11 +9,10 @@
 <link href="assets/css/bootstrap.min.css" rel="stylesheet">
 <link href="assets/css/bootstrap-slider.css" rel="stylesheet">
 <link href="assets/css/timeSlider.css" rel="stylesheet">
-<script src="angular.min.js"></script>
-<script src="assets/js/jquery-2.1.1.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/bootstrap-slider.min.js"></script>
-<script src="timeSlider.js"></script>
+<script src="angular/angular.min.js"></script>
+<script src="assets/js/jQuery/jquery-2.1.1.min.js"></script>
+<script src="assets/js/bootstrap/bootstrap.min.js"></script>
+<script src="assets/js/bootstrap/bootstrap-slider.min.js"></script>
 <script src="assets/js/highcharts/highcharts.js"></script>
 <script type="text/javascript">
 var i; 
@@ -24,7 +24,7 @@ for (i = 0 ; i < 1000 ; i++) {
 	
 	points[i] = {
 		"timestamp" : i,
-		"coords" : [ [ x, y ] ]
+		"coords" : [ [x, y] ]
 	};
 	
 	
@@ -34,7 +34,7 @@ console.log(points);
 
 </script>
 </head>
-<body style="padding-top: 50px">
+<body style="padding-top: 50px" onload=>
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
@@ -103,13 +103,13 @@ console.log(points);
 			chart.series[0].setData(points[slideEvt.value].coords);
 		});
 
-		var i = -1;
+		var i = 0;
 		$('#button').click(function() {
 			
 			setInterval(function() {
-				i++;
 				var mySlider = $("#timeSlider").slider();
 				mySlider.slider('setValue', i,true);
+				i++;
 			}, 250);
 
 		})

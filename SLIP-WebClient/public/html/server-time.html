@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+	<head>
+		<base href = "../"/>
+		<title>Hello AngularJS</title>
+		<script src="assets/js/angular/angular.min.js"></script>
+    	<script src="angular-modules/server-time.js"></script>
+	</head>
+
+	<body data-ng-app = "applicationServerTime">
+		<div data-ng-controller="server-time-controller">
+			<p>The ID is {{greeting.id}}</p>
+			<p>The content is {{greeting.content}}</p>
+			<p>The time on the server is {{greeting.time}}</p>
+		</div>
+	</body>
+</html>
