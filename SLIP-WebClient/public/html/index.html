@@ -1,25 +1,17 @@
 <!doctype html>
 <html>
 <head>
-<base href="../" />
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SPORT Integration 2</title>
-<link href="assets/css/bootstrap.min.css" rel="stylesheet">
-<link href="assets/css/bootstrap-slider.css" rel="stylesheet">
-<link href="assets/css/timeSlider.css" rel="stylesheet">
-<script src="assets/js/angular/angular.min.js"></script>
-<script src="assets/js/jQuery/jquery-2.1.1.min.js"></script>
-<script src="assets/js/bootstrap/bootstrap.min.js"></script>
-<script src="assets/js/bootstrap/bootstrap-slider.min.js"></script>
-<script src="assets/js/highcharts/highcharts.js"></script>
 
-<script src="dependencies/second-integration/set-data.js"></script>
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="../assets/css/bootstrap-slider.css" rel="stylesheet">
+<link href="../assets/css/timeSlider.css" rel="stylesheet">
+<script src="../assets/js/angular/angular.min.js"></script>
+<script src="../assets/js/jQuery/jquery-2.1.1.min.js"></script>
+<script src="../assets/js/bootstrap/bootstrap.min.js"></script>
+<script src="../assets/js/bootstrap/bootstrap-slider.min.js"></script>
+<script src="../assets/js/highcharts/highcharts.js"></script>
+<script src="../dependencies/second-integration/setPoints.js"></script>
 
-<script type="text/javascript">
-
-</script>
 </head>
 <body data-ng-app="secondIntegrationModule" style="padding-top: 50px">
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -43,7 +35,7 @@
 
 	<div id="Second Integration Code">
 
-		<div id="container" style="height: 500px"></div>
+		<div id="container"></div>
 		<div class="well">
 			<input id="timeSlider" type="text" data-slider-min="0"
 				data-slider-max="1000" data-slider-step="1" data-slider-value="0" />
@@ -55,8 +47,9 @@
 
 	</div>
 
-	<div id = "outer" data-ng-controller = "Data">
-		
-	</div>
+	<script src="../dependencies/second-integration/createChart.js"></script>
+	<script src="../dependencies/second-integration/createTimeSlider.js"></script>
+	<script src="../dependencies/second-integration/handleButtonClick.js"></script>
+
 </body>
 </html>
