@@ -1,38 +1,19 @@
 <!doctype html>
 <html>
 <head>
-<base href = "../"/>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SPORT Integration 2</title>
-<link href="assets/css/bootstrap.min.css" rel="stylesheet">
-<link href="assets/css/bootstrap-slider.css" rel="stylesheet">
-<link href="assets/css/timeSlider.css" rel="stylesheet">
-<script src="angular/angular.min.js"></script>
-<script src="assets/js/jQuery/jquery-2.1.1.min.js"></script>
-<script src="assets/js/bootstrap/bootstrap.min.js"></script>
-<script src="assets/js/bootstrap/bootstrap-slider.min.js"></script>
-<script src="assets/js/highcharts/highcharts.js"></script>
-<script type="text/javascript">
-var i; 
-var points = [];
-for (i = 0 ; i < 1000 ; i++) {
-	var r = 100;
-	var x = r*Math.sin(i*Math.PI/180)+250; 
-	var y = r*Math.cos(i*Math.PI/180)+250;
-	
-	points[i] = {
-		"timestamp" : i,
-		"coords" : [ [x, y] ]
-	};
-	
-	
-}
-
-console.log(points);
-
-</script>
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="../assets/css/bootstrap-slider.css" rel="stylesheet">
+<link href="../assets/css/timeSlider.css" rel="stylesheet">
+<script src="../assets/js/angular/angular.min.js"></script>
+<script src="../assets/js/jQuery/jquery-2.1.1.min.js"></script>
+<script src="../assets/js/bootstrap/bootstrap.min.js"></script>
+<script src="../assets/js/bootstrap/bootstrap-slider.min.js"></script>
+<script src="../assets/js/highcharts/highcharts.js"></script>
+<script src="../dependencies/second-integration/setPoints.js"></script>
 </head>
 <body style="padding-top: 50px" onload=>
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -56,64 +37,19 @@ console.log(points);
 
 	<div id="Second Integration Code">
 
-		<div id="container" style="height: 500px"></div>
+		<div id="container"></div>
 		<div class="well">
 			<input id="timeSlider" type="text" data-slider-min="0"
-				data-slider-max="1000" data-slider-step="1" data-slider-value="0" /> <span
-				id="timeSliderValueLabel">Current Time<span
+				data-slider-max="1000" data-slider-step="1" data-slider-value="0" />
+			<span id="timeSliderValueLabel">Current Time<span
 				id="timeSliderValue">0</span></span>
 		</div>
 
 		<button id="button">Play</button>
 
-
-
 	</div>
-
-
-
-	<script type="text/javascript">
-		$(function() {
-			$('#container').highcharts({
-				chart : {
-					width : 500,
-					height : 500
-				},
-				series : [ {
-					data : []
-				} ],
-				yAxis : {
-					min : 0,
-					max : 500
-				},
-				xAxis : {
-					min : 0,
-					max : 500
-				}
-			});
-
-			;
-		});
-		
-		$("#timeSlider").slider();
-		$("#timeSlider").on('slide', function(slideEvt) {
-			$("#timeSliderValue").text(slideEvt.value);
-
-			var chart = $('#container').highcharts();
-			chart.series[0].setData(points[slideEvt.value].coords);
-		});
-
-		var i = 0;
-		$('#button').click(function() {
-			
-			setInterval(function() {
-				var mySlider = $("#timeSlider").slider();
-				mySlider.slider('setValue', i,true);
-				i++;
-			}, 250);
-
-		})
-	</script>
-
+	<script src="../dependencies/second-integration/createChart.js"></script>
+	<script src="../dependencies/second-integration/createTimeSlider.js"></script>
+	<script src="../dependencies/second-integration/handleButtonClick.js"></script>
 </body>
 </html>
