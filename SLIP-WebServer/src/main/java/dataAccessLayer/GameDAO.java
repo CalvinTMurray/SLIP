@@ -6,7 +6,6 @@ import javax.sql.DataSource;
 
 import receivedAppData.ServerFrame;
 import receivedAppData.ServerPayload;
-//@Repository
 public interface GameDAO {
   
   /**

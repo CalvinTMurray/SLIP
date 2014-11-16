@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import charts.HighChartScatterPlot;
 import receivedAppData.ServerFrame;
 import receivedAppData.ServerPayload;
 import statistics.StatisticsThread;
+import charts.ChartType;
 import dataAccessLayer.GameDAO;
 import dataAccessLayer.GameQueries;
 import di.configuration.DIConfiguration;
@@ -22,7 +22,6 @@ import di.configuration.DIConfiguration;
 @RestController
 public class TestController {
 
-//	private ArrayList<ServerPayload> payloads = new ArrayList<ServerPayload>();
 	private ApplicationContext ctx = new AnnotationConfigApplicationContext(DIConfiguration.class);
 	private GameDAO userJDBCTemplate = ctx.getBean(GameQueries.class);
 	
@@ -63,6 +62,9 @@ public class TestController {
 		return userJDBCTemplate.getPayloadsRange(sessionID, timestamp);
     }
 	
+	/**
+	 * Session ID anonymous class
+	 */
 	class SessionID {
 		public long sessionID;
 		public SessionID (long sessionID) {
@@ -106,11 +108,11 @@ public class TestController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/position-data", produces = { "application/json" })
-    public @ResponseBody HighChartScatterPlot getData(@RequestParam (value = "sessionID", required = false) long sessionID) {
+    public @ResponseBody List<?> getData(@RequestParam (value = "sessionID", required = false) long sessionID,
+    		@RequestParam (value = "chartType, required = true") ChartType type) {
 		
-		
-		sessionID = userJDBCTemplate.getNewSessionID() - 1;
-		
-		return StatisticsThread.getInstance().createHighChartScatterPlot(sessionID);
+		return StatisticsThread.getInstance().getStatistics(sessionID).getChart(type).getData();
     }
+	
+	
 }

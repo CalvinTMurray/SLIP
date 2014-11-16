@@ -11,9 +11,10 @@ import statistics.StatisticsThread;
 public class Application {
 
     public static void main(String[] args) {
+    	Thread statisticsThread = new Thread (StatisticsThread.getInstance());
+    	statisticsThread.start();
+    	
         SpringApplication.run(Application.class, args);
         
-        Thread statisticsThread = new Thread (StatisticsThread.getInstance());
-        statisticsThread.start();
     }
 }
