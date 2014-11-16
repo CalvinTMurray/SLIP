@@ -1,5 +1,6 @@
 package statistics;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,10 +8,9 @@ import java.util.Map;
 import charts.AbstractChart;
 import charts.ChartType;
 
-public class Statistics implements java.io.Serializable{
+public class Statistics implements Serializable{
 	
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = -6825420607016207783L;
 	private long sessionID;
 	private Date createdOn;
 	private Map<ChartType, AbstractChart<?>> charts;

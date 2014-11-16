@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
@@ -74,16 +75,20 @@ public class StatisticsThread implements Runnable {
 			}
 			
 			try {
-				Thread.sleep(10);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			
 
-			while (!completedSessions.isEmpty()) {
+			Iterator<Entry<Long, Statistics>> iterator = completedSessions.entrySet().iterator();
+			
+			while (iterator.hasNext()) {
 				System.out.println("Processing statistics for SessionID: " + sessionID);
-				Statistics statistics = pendingSessions.get(sessionID);
+				Statistics statistics = iterator.next().getValue();
 				addCharts(statistics);
 				serializeStatistics(statistics);
+				iterator.remove();
 			}
 		}
 	}
@@ -123,12 +128,15 @@ public class StatisticsThread implements Runnable {
 	 * Inform the statistics thread that it can perform statistical processing on all pending sessions
 	 */
 	public void terminateAllSessions() {
-		
+		System.out.println("Terminating all sessions");
 		synchronized (pendingSessions) {
 			
 			for (Entry<Long, Statistics> sessionStatistics : pendingSessions.entrySet()) {
+				System.out.println("Session: " + sessionStatistics.getKey() + " is completed");
 				completedSessions.put(sessionStatistics.getKey(), sessionStatistics.getValue());
 			}
+			
+			pendingSessions.clear();
 
 		}
 		
@@ -164,6 +172,7 @@ public class StatisticsThread implements Runnable {
 	
 	private void deserializeStatistics(long sessionID) {
 		
+		
 		Statistics statistics = null;
 		
 		String statsFileName = "session-" + sessionID;
@@ -174,6 +183,7 @@ public class StatisticsThread implements Runnable {
 			statistics = (Statistics) in.readObject();
 			in.close();
 			fileIn.close();
+			System.out.println("Deserialized statistics for session " + sessionID);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;

@@ -11,6 +11,7 @@ import dataAccessLayer.StatisticsQueries;
 
 public class HighChartScatterPlot extends AbstractChart<HighChartScatterPlotData> {
 
+	private static final long serialVersionUID = 8187628046604201225L;
 	private List<HighChartScatterPlotData> data;
 	
 	public HighChartScatterPlot(long sessionID) {
@@ -61,7 +62,9 @@ public class HighChartScatterPlot extends AbstractChart<HighChartScatterPlotData
 				point = queries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), timeSlices.get(i + 1));
 			}
 			
-			addData(timeSlices.get(i), point);
+			if (point !=null) {
+				addData(timeSlices.get(i), point);
+			}
 		}
 		
 		System.out.println("Size of highChartScatterPlot data: " + getData().size());

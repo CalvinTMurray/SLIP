@@ -86,6 +86,7 @@ public class TestController {
 			System.out.println("Issuing new Session ID: " + sessionID.sessionID);
 		} else {
 			sessionID = new SessionID(suggestedSessionID);
+			StatisticsThread.getInstance().addSession(sessionID.sessionID);
 			System.out.println("Issuing the previous Session ID: " + sessionID.sessionID);
 		}
 
@@ -97,7 +98,7 @@ public class TestController {
     public void endSessionID() {
 		
 		StatisticsThread.getInstance().terminateAllSessions();
-        System.out.println("Terminating Sessions");
+        
     }
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/ping", headers = { "Content-type=application/json" }, produces = { "application/json" })
@@ -109,7 +110,7 @@ public class TestController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/position-data", produces = { "application/json" })
     public @ResponseBody List<?> getData(@RequestParam (value = "sessionID", required = false) long sessionID,
-    		@RequestParam (value = "chartType, required = true") ChartType type) {
+    		@RequestParam (value = "chartType", required = true) ChartType type) {
 		
 		return StatisticsThread.getInstance().getStatistics(sessionID).getChart(type).getData();
     }

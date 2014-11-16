@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -63,18 +64,27 @@ public class StatisticsQueries {
 						") AS \"ClosestPosition\" " +
 						"LIMIT 1";
 		
-		 return jdbcTemplateObject.queryForObject(sql, new Object[] {timestampExpected, lowTimestamp, highTimestamp, sessionID}, 
-				new RowMapper<PositionPoint>() {
-
-					@Override
-					public PositionPoint mapRow(ResultSet rs, int rowNum)
-							throws SQLException {
-						
-						int x = rs.getInt("xPosition");
-						int y = rs.getInt("yPosition");
-						
-						return new PositionPoint(x,y);
-					}
-		 });
+		PositionPoint point = null;
+		
+		try {
+			point =  jdbcTemplateObject.queryForObject(sql, new Object[] {timestampExpected, lowTimestamp, highTimestamp, sessionID}, 
+					new RowMapper<PositionPoint>() {
+				
+				@Override
+				public PositionPoint mapRow(ResultSet rs, int rowNum)
+						throws SQLException {
+					
+					int x = rs.getInt("xPosition");
+					int y = rs.getInt("yPosition");
+					
+					return new PositionPoint(x,y);
+				}
+			});
+			
+		} catch (EmptyResultDataAccessException e) {
+			System.err.println("No position found near timestamp: " + timestampExpected);
+		}
+		
+		return point;
 	}	
 }

@@ -1,7 +1,10 @@
 package statistics;
 
-public class PositionPoint {
+import java.io.Serializable;
+
+public class PositionPoint implements Serializable{
 	
+	private static final long serialVersionUID = -973461268477223680L;
 	public int xPosition;
 	public int yPosition;
 	
