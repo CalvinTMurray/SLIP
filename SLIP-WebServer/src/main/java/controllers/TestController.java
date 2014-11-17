@@ -40,7 +40,7 @@ public class TestController {
 		
 		userJDBCTemplate.insertFrame(frame);
 
-		return "Post for frame handled";
+		return "Post for server-frame handled";
 
 	}
 
@@ -49,7 +49,7 @@ public class TestController {
 
 		System.out.println(payload);
 
-		return "Posting payload handled";
+		return "Posting server-payload handled";
 		
 	}
 
@@ -109,9 +109,10 @@ public class TestController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/position-data", produces = { "application/json" })
-    public @ResponseBody List<?> getData(@RequestParam (value = "sessionID", required = false) long sessionID,
+    public @ResponseBody List<?> getData(@RequestParam (value = "sessionID", required = true) long sessionID,
     		@RequestParam (value = "chartType", required = true) ChartType type) {
 		
+		System.out.println("Getting statistics for session " + sessionID + " and chart " + type);
 		return StatisticsThread.getInstance().getStatistics(sessionID).getChart(type).getData();
     }
 	

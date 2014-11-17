@@ -19,11 +19,13 @@ public class HighChartScatterPlotData implements Serializable{
 		return timestamp;
 	}
 	
-	public int getX() {
-		return position.xPosition;
-	}
-	
-	public int getY() {
-		return position.yPosition;
+	public int[] getPosition() {
+		
+		int[] position = new int[2];
+		
+		position[0] = this.position.xPosition;
+		position[1] = this.position.yPosition;
+		
+		return position;
 	}
 }
