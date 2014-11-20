@@ -1,4 +1,4 @@
-package receivedAppData;
+package model;
 
 import java.util.List;
 

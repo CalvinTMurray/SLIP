@@ -1,4 +1,4 @@
-package receivedAppData;
+package model;
 
 public class ServerPayload {
 
