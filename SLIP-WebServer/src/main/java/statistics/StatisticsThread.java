@@ -12,11 +12,13 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
+import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.util.StopWatch;
 
 import charts.HighChartScatterPlot;
 import dataAccessLayer.StatisticsQueries;
@@ -82,12 +84,19 @@ public class StatisticsThread implements Runnable {
 			
 
 			Iterator<Entry<Long, Statistics>> iterator = completedSessions.entrySet().iterator();
-			
 			while (iterator.hasNext()) {
-				System.out.println("Processing statistics for SessionID: " + sessionID);
-				Statistics statistics = iterator.next().getValue();
-				addCharts(statistics);
-				serializeStatistics(statistics);
+				StopWatch stopwatch = new StopWatch();
+				stopwatch.start();
+
+				Entry<Long, Statistics> entry = iterator.next();
+				
+				System.out.println("Processing statistics for session ID: " + entry.getKey());
+				addCharts(entry.getValue());
+				serializeStatistics(entry.getValue());
+				
+				stopwatch.stop();
+				System.out.println("Statistics for session ID: " + entry.getKey() + " processed in " + stopwatch.getLastTaskTimeMillis());
+				
 				iterator.remove();
 			}
 		}
@@ -149,9 +158,12 @@ public class StatisticsThread implements Runnable {
 	 */
 	public Statistics getStatistics(long sessionID) {
 		
-		deserializeStatistics(sessionID);
-		
-		return loadedStatistics.get(sessionID);
+		if (loadedStatistics.containsKey(sessionID)) {
+			return loadedStatistics.get(sessionID);
+		} else {
+			deserializeStatistics(sessionID);
+			return loadedStatistics.get(sessionID);
+		}
 	}
 	
 	private void serializeStatistics(Statistics statistics) {
@@ -171,7 +183,6 @@ public class StatisticsThread implements Runnable {
 	}
 	
 	private void deserializeStatistics(long sessionID) {
-		
 		
 		Statistics statistics = null;
 		
