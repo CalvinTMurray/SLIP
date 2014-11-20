@@ -8,11 +8,11 @@ import receivedAppData.ServerFrame;
 import receivedAppData.ServerPayload;
 public interface GameDAO {
   
-  /**
-   * Set the datasource the JDBC template will use
-   * @param dataSource
-   */
-  public void setDataSource(DataSource dataSource);
+//  /**
+//   * Set the datasource the JDBC template will use
+//   * @param dataSource
+//   */
+//  public void setDataSource(DataSource dataSource);
   
   /**
    * Return all the payloads that were received in a given session ID

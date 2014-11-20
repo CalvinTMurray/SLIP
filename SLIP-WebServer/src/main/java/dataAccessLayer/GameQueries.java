@@ -4,32 +4,41 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import receivedAppData.ServerFrame;
 import receivedAppData.ServerPayload;
 
 @Repository
-public class GameQueries implements GameDAO {
-
-	private JdbcTemplate jdbcTemplateObject;
+public class GameQueries extends JdbcDaoSupport implements GameDAO {
 
 	@Autowired
-	@Override
-	public void setDataSource(DataSource dataSource) {
-		System.out.println("setDataSource. Datasource: " + (dataSource != null));
-		jdbcTemplateObject = new JdbcTemplate(dataSource);
-	}
+	private DataSource dataSource;
+	private JdbcTemplate jdbcTemplateObject;
 
-	public JdbcTemplate getJdbcTemplate(){
-		return jdbcTemplateObject;
-	}
+//	@Autowired
+//	@Override
+//	public void setDataSource(DataSource dataSource) {
+//		System.out.println("setDataSource. Datasource: " + (dataSource != null));
+//		jdbcTemplateObject = new JdbcTemplate(dataSource);
+//	}
 
+//	public JdbcTemplate getJdbcTemplate(){
+//		return jdbcTemplateObject;
+//	}
+
+	@PostConstruct
+	private void initialise() {
+		setDataSource(dataSource);
+		jdbcTemplateObject = getJdbcTemplate();
+	}
 
 	@Override
 	public List<ServerPayload> getAllPayloads(int sessionID) {

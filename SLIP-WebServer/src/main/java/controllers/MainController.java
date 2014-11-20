@@ -20,7 +20,7 @@ import dataAccessLayer.GameQueries;
 import di.configuration.DIConfiguration;
 
 @RestController
-public class TestController {
+public class MainController {
 
 	private ApplicationContext ctx = new AnnotationConfigApplicationContext(DIConfiguration.class);
 	private GameDAO userJDBCTemplate = ctx.getBean(GameQueries.class);

@@ -41,7 +41,7 @@ public class HighChartScatterPlot extends AbstractChart<HighChartScatterPlotData
 		long endTime = queries.getMaxTime(sessionID);
 		long duration = (endTime - startTime);
 		
-		List<Long> timeSlices = Time.getTimeSlice(TimeValue.SECONDS, startTime, endTime);
+		List<Long> timeSlices = Time.getTimeSlice(500, startTime, endTime);
 		
 		System.out.println("Size of timeSlices: " + timeSlices.size());
 		System.out.println("SessionID: " + sessionID);

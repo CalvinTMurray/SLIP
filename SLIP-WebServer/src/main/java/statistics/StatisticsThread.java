@@ -164,7 +164,6 @@ public class StatisticsThread implements Runnable {
 			deserializeStatistics(sessionID);
 			return loadedStatistics.get(sessionID);
 		}
-
 	}
 	
 	private void serializeStatistics(Statistics statistics) {
