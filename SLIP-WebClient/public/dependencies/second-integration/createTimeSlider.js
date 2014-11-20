@@ -4,6 +4,7 @@ $(document).ready(function() {
 		$("#timeSliderValue").text(slideEvt.value);
 
 		var chart = $('#container').highcharts();
-		chart.series[0].setData(points[slideEvt.value].coords);
+		chart.series[0].data[0].update(points[slideEvt.value].position);
+		console.log(points[slideEvt.value].position);
 	});
 })
