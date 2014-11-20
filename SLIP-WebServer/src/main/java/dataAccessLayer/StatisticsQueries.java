@@ -29,8 +29,9 @@ public class StatisticsQueries {
 	}
 	
 	public Long getMinTime(long sessionID) {
+		
 		String sql =	"SELECT MIN(\"Timestamp\") " +
-						"FROM \"Game\" " +
+						"FROM \"SessionPayload\" " +
 						"WHERE \"SessionID\" = ?";
 		
 		return jdbcTemplateObject.queryForObject(sql, new Object[] {sessionID}, Long.class);
@@ -38,7 +39,7 @@ public class StatisticsQueries {
 	
 	public Long getMaxTime(long sessionID) {
 		String sql =	"SELECT MAX(\"Timestamp\") " +
-						"FROM \"Game\" " +
+						"FROM \"SessionPayload\" " +
 						"WHERE \"SessionID\" = ?";
 		
 		return jdbcTemplateObject.queryForObject(sql, new Object[] {sessionID}, Long.class);
@@ -58,7 +59,7 @@ public class StatisticsQueries {
 		String sql = 	"SELECT \"PayloadID\", \"xPosition\", \"yPosition\", \"TimeDifference\"" +
 						"FROM ( " +
 						"SELECT \"PayloadID\", \"xPosition\", \"yPosition\", abs(\"Timestamp\" - ?) AS \"TimeDifference\" " +
-						"FROM \"Game\" " +
+						"FROM \"SessionPayload\" " +
 						"WHERE \"Timestamp\" >= ? AND \"Timestamp\" <= ? AND \"SessionID\" = ? " +
 						"ORDER BY \"TimeDifference\"" +
 						") AS \"ClosestPosition\" " +

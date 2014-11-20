@@ -6,7 +6,7 @@ import java.util.List;
 import statistics.PositionPoint;
 import statistics.StatisticsThread;
 import statistics.Time;
-import statistics.Time.TimeValue;
+import dataAccessLayer.SessionPayloadDAO;
 import dataAccessLayer.StatisticsQueries;
 
 public class HighChartScatterPlot extends AbstractChart<HighChartScatterPlotData> {
@@ -34,12 +34,21 @@ public class HighChartScatterPlot extends AbstractChart<HighChartScatterPlotData
 	@Override
 	protected void createChart (long sessionID) {
 		
-		StatisticsQueries queries = StatisticsThread.statisticsQueries;
+		StatisticsQueries statisticsQueries = StatisticsThread.statisticsQueries;
+		SessionPayloadDAO sessionPayloadQueries = StatisticsThread.sessionPayloadQueries;
 		
 		// All in milliseconds
-		long startTime = queries.getMinTime(sessionID);
-		long endTime = queries.getMaxTime(sessionID);
+		
+		// TODO Null check
+		Long startTime = statisticsQueries.getMinTime(sessionID);
+		if (startTime == null) {
+			return;
+		}
+		
+		long endTime = statisticsQueries.getMaxTime(sessionID);
 		long duration = (endTime - startTime);
+		
+		sessionPayloadQueries.insertSessionTime(sessionID, startTime, endTime);
 		
 		List<Long> timeSlices = Time.getTimeSlice(500, startTime, endTime);
 		
@@ -55,11 +64,11 @@ public class HighChartScatterPlot extends AbstractChart<HighChartScatterPlotData
 			long currentTimeSlice = timeSlices.get(i);
 			
 			if (i == 0) {
-				point = queries.getClosestPoint(sessionID, currentTimeSlice, 0, timeSlices.get(i+1));
+				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, 0, timeSlices.get(i+1));
 			} else if (i == timeSlices.size() - 1) {
-				point = queries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), endTime);
+				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), endTime);
 			} else {
-				point = queries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), timeSlices.get(i + 1));
+				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), timeSlices.get(i + 1));
 			}
 			
 			if (point !=null) {

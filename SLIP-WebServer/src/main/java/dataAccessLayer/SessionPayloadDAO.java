@@ -2,11 +2,9 @@ package dataAccessLayer;
 
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import receivedAppData.ServerFrame;
-import receivedAppData.ServerPayload;
-public interface GameDAO {
+import model.ServerFrame;
+import model.ServerPayload;
+public interface SessionPayloadDAO {
   
 //  /**
 //   * Set the datasource the JDBC template will use
@@ -50,8 +48,17 @@ public interface GameDAO {
   public List<ServerPayload> getPayloadsRange(long sessionID, long timestamp);
   
   /**
-   * 
+   * TODO This should be split into another DAO called SessionDAO!!!!!!!!!
    * @return the next session ID that has not been used in the DB
    */
   public long getNewSessionID();
+  
+  /**
+   * TODO This should be split into another DAO called SessionDAO!!!!!!!!!!
+   * Get a list of all the current sessions that are in the DB
+   * @return
+   */
+  public List<Long> getAllSessionsIDs();
+  
+  public void insertSessionTime(long sessionID, long startTime, long endTime);
 }

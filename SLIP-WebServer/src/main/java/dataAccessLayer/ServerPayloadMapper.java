@@ -3,9 +3,9 @@ package dataAccessLayer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.springframework.jdbc.core.RowMapper;
+import model.ServerPayload;
 
-import receivedAppData.ServerPayload;
+import org.springframework.jdbc.core.RowMapper;
 
 public class ServerPayloadMapper implements RowMapper<ServerPayload>{
 

@@ -17,17 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import statistics.StatisticsThread;
 import charts.ChartType;
-import dataAccessLayer.GameDAO;
-import dataAccessLayer.GameQueries;
+import dataAccessLayer.SessionPayloadDAO;
+import dataAccessLayer.SessionPayloadQueries;
 import di.configuration.DIConfiguration;
 
 @RestController
 public class MainController {
 
-	private ApplicationContext ctx = new AnnotationConfigApplicationContext(
-			DIConfiguration.class);
-	private GameDAO userJDBCTemplate = ctx.getBean(GameQueries.class);
 
+	private ApplicationContext ctx = new AnnotationConfigApplicationContext(DIConfiguration.class);
+	private SessionPayloadDAO userJDBCTemplate = ctx.getBean(SessionPayloadQueries.class);
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/test", headers = { "Content-type=application/json" }, produces = { "application/json" })
 	public @ResponseBody String test(@RequestBody String payload) {
 		System.out.println(payload);

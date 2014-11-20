@@ -12,7 +12,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
-import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -21,6 +20,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.util.StopWatch;
 
 import charts.HighChartScatterPlot;
+import dataAccessLayer.SessionPayloadDAO;
+import dataAccessLayer.SessionPayloadQueries;
 import dataAccessLayer.StatisticsQueries;
 import di.configuration.DIConfiguration;
 
@@ -34,6 +35,7 @@ public class StatisticsThread implements Runnable {
 	// Automatic dependency injection on the statisticsQueries
 	private static ApplicationContext ctx = new AnnotationConfigApplicationContext(DIConfiguration.class);
 	public static StatisticsQueries statisticsQueries = ctx.getBean(StatisticsQueries.class);
+	public static SessionPayloadDAO sessionPayloadQueries = ctx.getBean(SessionPayloadQueries.class);
 	
 	private static StatisticsThread instance;
 	
