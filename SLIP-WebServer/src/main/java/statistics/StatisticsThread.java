@@ -3,6 +3,7 @@
  */
 package statistics;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -178,7 +179,7 @@ public class StatisticsThread implements Runnable {
 			out.writeObject(statistics);
 			out.close();
 			fileOut.close();
-			System.out.printf("Serialized data is saved in " + basePathStatistics + statsFileName + ".ser");
+			System.out.println("Serialized statistics to " + basePathStatistics + statsFileName + ".ser");
 		} catch(IOException i) {
 			i.printStackTrace();
 		}
@@ -190,8 +191,13 @@ public class StatisticsThread implements Runnable {
 		
 		String statsFileName = "session-" + sessionID;
 		
+		File file = new File(basePathStatistics + statsFileName + ".ser");
+		if( !file.exists() ) {
+			return;
+		}
+		
 		try {
-			FileInputStream fileIn = new FileInputStream(basePathStatistics + statsFileName + ".ser");
+			FileInputStream fileIn = new FileInputStream(file);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			statistics = (Statistics) in.readObject();
 			in.close();
@@ -202,7 +208,7 @@ public class StatisticsThread implements Runnable {
 			return;
 		} catch (ClassNotFoundException c) {
 			System.out.println("Statistics class not found");
-			c.printStackTrace();
+			c.printStackTrace();	
 			return;
 		}
 		

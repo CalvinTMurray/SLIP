@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.ServerFrame;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import statistics.Statistics;
 import statistics.StatisticsThread;
 import charts.ChartType;
 import dataAccessLayer.SessionPayloadDAO;
@@ -26,7 +28,7 @@ public class MainController {
 
 
 	private ApplicationContext ctx = new AnnotationConfigApplicationContext(DIConfiguration.class);
-	private SessionPayloadDAO userJDBCTemplate = ctx.getBean(SessionPayloadQueries.class);
+	private SessionPayloadDAO sessionPayloadQueries = ctx.getBean(SessionPayloadQueries.class);
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/test", headers = { "Content-type=application/json" }, produces = { "application/json" })
 	public @ResponseBody String test(@RequestBody String payload) {
@@ -37,7 +39,7 @@ public class MainController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/server-frame", headers = { "Content-type=application/json" }, produces = { "application/json" })
 	public @ResponseBody String sframe(@RequestBody ServerFrame frame) {
-		userJDBCTemplate.insertFrame(frame);
+		sessionPayloadQueries.insertFrame(frame);
 
 		return "Post for server-frame handled";
 	}
@@ -55,7 +57,7 @@ public class MainController {
 			@RequestParam(value = "timestamp", required = false, defaultValue = "0") long timestamp) {
 		System.out.println("Requesting payloads");
 
-		return userJDBCTemplate.getPayloadsRange(sessionID, timestamp);
+		return sessionPayloadQueries.getPayloadsRange(sessionID, timestamp);
 	}
 
 	/**
@@ -77,7 +79,7 @@ public class MainController {
 		SessionID sessionID;
 
 		if (suggestedSessionID < 0) {
-			sessionID = new SessionID(userJDBCTemplate.getNewSessionID());
+			sessionID = new SessionID(sessionPayloadQueries.getNewSessionID());
 			StatisticsThread.getInstance().addSession(sessionID.sessionID);
 
 			System.out
@@ -111,13 +113,19 @@ public class MainController {
 		System.out.println("Getting statistics for session " + sessionID
 				+ " and chart " + type);
 
-		return StatisticsThread.getInstance().getStatistics(sessionID)
-				.getChart(type).getData();
+		Statistics statistics = StatisticsThread.getInstance().getStatistics(sessionID);
+
+		if (statistics == null) {
+			// Empty list if we don't have any statistics yet
+			return new ArrayList<>();
+		} else {
+			return statistics.getChart(type).getData();
+		}
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/all-sessions", produces = { "application/json" })
 	public @ResponseBody List<Session> getAllSessions() {
-		return null;
+		return sessionPayloadQueries.getAllSessionsIDs();
 	}
 
 }

@@ -6,7 +6,7 @@ public class Session {
 	private long sessionID;
 	private long startTime;
 	private long endTime;
-	private String datePlayed;
+	private String date;
 
 	public long getSessionID() {
 		return sessionID;
@@ -32,12 +32,12 @@ public class Session {
 		this.endTime = endTime;
 	}
 
-	public String getDatePlayed() {
-		return datePlayed;
+	public String getDate() {
+		return date;
 	}
 
-	public void setDatePlayed(String datePlayed) {
-		this.datePlayed = datePlayed;
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 }

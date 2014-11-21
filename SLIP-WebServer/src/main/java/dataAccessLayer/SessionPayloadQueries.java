@@ -1,6 +1,7 @@
 package dataAccessLayer;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -10,10 +11,12 @@ import javax.sql.DataSource;
 
 import model.ServerFrame;
 import model.ServerPayload;
+import model.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -131,26 +134,38 @@ public class SessionPayloadQueries extends JdbcDaoSupport implements SessionPayl
 	}
 	
 	private void insertNewSession(long sessionID, Date date) {
-		String sqlInsertSession = 	"INSERT INTO \"Session\" (\"SessionID\", \"Date\")" +
+		String sqlInsertSession = 	"INSERT INTO \"Session\" (\"SessionID\", \"Date\") " +
 									"VALUES (?,?)";
 
 		jdbcTemplateObject.update(sqlInsertSession, sessionID, date);
 	}
 	
 	@Override
-	public List<Long> getAllSessionsIDs() {
-		String sql = 	"SELECT DISTINCT \"SessionID\"" +
-						"FROM \"SessionPayload\"";
+	public List<Session> getAllSessionsIDs() {
+		String sql = 	"SELECT \"SessionID\", \"StartTime\", \"EndTime\", \"Date\" " +
+						"FROM \"Session\"";
 
-		List<Long> sessions = jdbcTemplateObject.queryForList(sql, null, Long.class);
+		List<Session> sessions = jdbcTemplateObject.query(sql, new RowMapper<Session>() {
+
+			@Override
+			public Session mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Session session = new Session();
+				session.setSessionID(rs.getLong("SessionID"));
+				session.setStartTime(rs.getLong("StartTime"));
+				session.setEndTime(rs.getLong("EndTime"));
+				session.setDate(rs.getString("Date"));
+				return session;
+			}
+			
+		});
 		
 		return sessions;
 	}
 
 	@Override
 	public void insertSessionTime(long sessionID, long startTime, long endTime) {
-		String sql = 	"INSERT INTO \"Session\" (\"StartTime\", \"EndTime\")" +
-						"VALUES (?,?)" +
+		String sql = 	"UPDATE \"Session\" " +
+						"SET (\"StartTime\", \"EndTime\") = (?,?) " +
 						"WHERE \"SessionID\" = ?";
 		
 		jdbcTemplateObject.update(sql, startTime, endTime, sessionID);

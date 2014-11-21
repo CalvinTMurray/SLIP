@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.ServerFrame;
 import model.ServerPayload;
+import model.Session;
 public interface SessionPayloadDAO {
   
 //  /**
@@ -58,7 +59,7 @@ public interface SessionPayloadDAO {
    * Get a list of all the current sessions that are in the DB
    * @return
    */
-  public List<Long> getAllSessionsIDs();
+  public List<Session> getAllSessionsIDs();
   
   public void insertSessionTime(long sessionID, long startTime, long endTime);
 }
