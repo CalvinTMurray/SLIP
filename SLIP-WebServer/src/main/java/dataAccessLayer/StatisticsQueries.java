@@ -56,9 +56,9 @@ public class StatisticsQueries {
 	 */
 	public PositionPoint getClosestPoint(long sessionID, long timestampExpected, long lowTimestamp, long highTimestamp) {
 		
-		String sql = 	"SELECT \"PayloadID\", \"xPosition\", \"yPosition\", \"TimeDifference\"" +
+		String sql = 	"SELECT \"PayloadID\", \"xPosition\", \"yPosition\", \"Timestamp\", \"TimeDifference\" " +
 						"FROM ( " +
-						"SELECT \"PayloadID\", \"xPosition\", \"yPosition\", abs(\"Timestamp\" - ?) AS \"TimeDifference\" " +
+						"SELECT \"PayloadID\", \"xPosition\", \"yPosition\", \"Timestamp\", abs(\"Timestamp\" - ?) AS \"TimeDifference\" " +
 						"FROM \"SessionPayload\" " +
 						"WHERE \"Timestamp\" >= ? AND \"Timestamp\" <= ? AND \"SessionID\" = ? " +
 						"ORDER BY \"TimeDifference\"" +
@@ -67,6 +67,8 @@ public class StatisticsQueries {
 		
 		PositionPoint point = null;
 		
+		// TODO create a new class for the row mapper and put it into a new package.
+		// TODO find a way to get rid of this try catch block
 		try {
 			point =  jdbcTemplateObject.queryForObject(sql, new Object[] {timestampExpected, lowTimestamp, highTimestamp, sessionID}, 
 					new RowMapper<PositionPoint>() {
@@ -74,11 +76,11 @@ public class StatisticsQueries {
 				@Override
 				public PositionPoint mapRow(ResultSet rs, int rowNum)
 						throws SQLException {
-					
+					long timestamp = rs.getLong("Timestamp");
 					int x = rs.getInt("xPosition");
 					int y = rs.getInt("yPosition");
 					
-					return new PositionPoint(x,y);
+					return new PositionPoint(timestamp, x,y);
 				}
 			});
 			

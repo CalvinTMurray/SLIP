@@ -9,7 +9,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
@@ -20,6 +22,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.util.StopWatch;
 
+import statistics.Time.TimeValue;
+import charts.DistancePlot;
 import charts.HighChartScatterPlot;
 import dataAccessLayer.SessionPayloadDAO;
 import dataAccessLayer.SessionPayloadQueries;
@@ -94,8 +98,11 @@ public class StatisticsThread implements Runnable {
 				Entry<Long, Statistics> entry = iterator.next();
 				
 				System.out.println("Processing statistics for session ID: " + entry.getKey());
-				addCharts(entry.getValue());
-				serializeStatistics(entry.getValue());
+				boolean success = addCharts(entry.getValue());
+				
+				if (success) {
+					serializeStatistics(entry.getValue());
+				}
 				
 				stopwatch.stop();
 				System.out.println("Statistics for session ID: " + entry.getKey() + " processed in " + stopwatch.getLastTaskTimeMillis());
@@ -110,10 +117,48 @@ public class StatisticsThread implements Runnable {
 	 * @param statistics the statistics object the charts should be created for
 	 * @return
 	 */
-	private Statistics addCharts(Statistics statistics) {
-		statistics.addChart(new HighChartScatterPlot(statistics.getSessionID()));
+	private boolean addCharts(Statistics statistics) {
 		
-		return statistics;
+		long sessionID = statistics.getSessionID();
+
+		// TODO Null check
+		Long startTime = statisticsQueries.getMinTime(sessionID);
+		if (startTime == null) {
+			return false;
+		}
+
+		long endTime = statisticsQueries.getMaxTime(sessionID);
+		long duration = (endTime - startTime);
+
+		List<Long> timeSlices = Time.getTimeSlice(TimeValue.SECONDS, startTime, endTime);
+		List<PositionPoint> points = new ArrayList<PositionPoint>();
+		
+		System.out.println("Size of timeSlices: " + timeSlices.size());
+		System.out.println("SessionID: " + sessionID);
+		System.out.println("startTime: " + startTime);
+		System.out.println("endTime: " + endTime);
+		System.out.println("Game duration: " + duration);
+		
+		for (int i = 0; i < timeSlices.size(); i++) {
+			PositionPoint point;
+			long currentTimeSlice = timeSlices.get(i);
+			
+			
+			if (i == timeSlices.size() - 1) { // At the end
+				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), endTime);
+			} else if (i == 0) { // At the start with time slices still to process
+				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, 0, timeSlices.get(i+1));
+			} else { // Processing points somewhere in the middle
+				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), timeSlices.get(i + 1));
+			}
+			
+			points.add(point);
+		}
+		
+		statistics.addChart(new HighChartScatterPlot(sessionID, points));
+		statistics.addChart(new DistancePlot(sessionID, points));
+		
+		return true;
 	}
 
 	/**
