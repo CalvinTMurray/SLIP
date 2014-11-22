@@ -15,6 +15,7 @@ public class Statistics implements Serializable{
 	private Date createdOn;
 	private Map<ChartType, AbstractChart<?>> charts;
 	
+	
 	public Statistics(long sessionID) {
 		this.sessionID = sessionID;
 		this.createdOn = new Date();

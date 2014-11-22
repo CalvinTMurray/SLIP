@@ -4,25 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import statistics.PositionPoint;
-import statistics.StatisticsThread;
-import statistics.Time;
-import dataAccessLayer.SessionPayloadDAO;
-import dataAccessLayer.StatisticsQueries;
 
 public class HighChartScatterPlot extends AbstractChart<HighChartScatterPlotData> {
 
 	private static final long serialVersionUID = 8187628046604201225L;
 	private List<HighChartScatterPlotData> data;
+	private List<PositionPoint> points;
 	
-	public HighChartScatterPlot(long sessionID) {
+	public HighChartScatterPlot(long sessionID, List<PositionPoint> points) {
 		this.data = new ArrayList<HighChartScatterPlotData>();
+		this.points = points;
 		super.setType(ChartType.HIGHCHART_SCATTER_PLOT);
 		
 		createChart(sessionID);
 	}
 	
 	private void addData(long timestamp, PositionPoint coords) {
-		System.out.println("insertedData timestamp: " + timestamp + "\tcoordinates: " + coords);
+		System.out.println("inserted HighChartScatterPlotData timestamp: " + timestamp + "\tcoordinates: " + coords);
 		data.add(new HighChartScatterPlotData(timestamp,coords));
 	}
 	
@@ -34,45 +32,12 @@ public class HighChartScatterPlot extends AbstractChart<HighChartScatterPlotData
 	@Override
 	protected void createChart (long sessionID) {
 		
-		StatisticsQueries statisticsQueries = StatisticsThread.statisticsQueries;
-		SessionPayloadDAO sessionPayloadQueries = StatisticsThread.sessionPayloadQueries;
-		
-		// All in milliseconds
-		
-		// TODO Null check
-		Long startTime = statisticsQueries.getMinTime(sessionID);
-		if (startTime == null) {
-			return;
-		}
-		
-		long endTime = statisticsQueries.getMaxTime(sessionID);
-		long duration = (endTime - startTime);
-		
-		sessionPayloadQueries.insertSessionTime(sessionID, startTime, endTime);
-		
-		List<Long> timeSlices = Time.getTimeSlice(500, startTime, endTime);
-		
-		System.out.println("Size of timeSlices: " + timeSlices.size());
-		System.out.println("SessionID: " + sessionID);
-		System.out.println("startTime: " + startTime);
-		System.out.println("endTime: " + endTime);
-		System.out.println("Game duration: " + duration);
-		
-		// Add data points to the chart
-		for (int i = 0; i < timeSlices.size(); i++) {
-			PositionPoint point;
-			long currentTimeSlice = timeSlices.get(i);
-			
-			if (i == 0) {
-				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, 0, timeSlices.get(i+1));
-			} else if (i == timeSlices.size() - 1) {
-				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), endTime);
+		for (PositionPoint point : points) {
+			if (point == null) {
+				System.out.println("Added null coordinate");
+				data.add(null);
 			} else {
-				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), timeSlices.get(i + 1));
-			}
-			
-			if (point !=null) {
-				addData(timeSlices.get(i), point);
+				addData(point.timestamp, point);
 			}
 		}
 		

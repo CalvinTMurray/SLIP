@@ -145,6 +145,7 @@ public class SessionPayloadQueries extends JdbcDaoSupport implements SessionPayl
 		String sql = 	"SELECT \"SessionID\", \"StartTime\", \"EndTime\", \"Date\" " +
 						"FROM \"Session\"";
 
+		// TODO take this out and move it into a new package
 		List<Session> sessions = jdbcTemplateObject.query(sql, new RowMapper<Session>() {
 
 			@Override
