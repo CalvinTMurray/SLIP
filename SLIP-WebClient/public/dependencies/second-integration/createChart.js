@@ -10,6 +10,9 @@ $(document).ready(
 				            },
 							plotBackgroundImage : '../assets/images/court.svg'
 						},
+						credits: {
+				            enabled: false
+				        },
 						title : {
 							text : ''
 						},
@@ -20,6 +23,7 @@ $(document).ready(
 							}
 						},
 						series : [ {
+							name: 'Object',
 							data : [ [ 0, 0 ] ]
 						} ],
 						yAxis : {

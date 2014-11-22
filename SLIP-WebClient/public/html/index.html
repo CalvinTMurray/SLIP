@@ -10,7 +10,7 @@
 <script src="../assets/js/bootstrap/bootstrap.min.js"></script>
 <script src="../assets/js/bootstrap/bootstrap-slider.min.js"></script>
 <script src="../assets/js/highcharts/highcharts.js"></script>
-<script src="../dependencies/second-integration/setPoints.js"></script>
+
 
 </head>
 <body style="padding-top: 50px">
@@ -38,15 +38,16 @@
 		<div id="container"></div>
 		<div class="well">
 			<input id="timeSlider" type="text" data-slider-min="0"
-				data-slider-max="1000" data-slider-step="1" data-slider-value="0" />
-			<span id="timeSliderValueLabel">Current Time<span
-				id="timeSliderValue">0</span></span>
+				data-slider-step="1" data-slider-value="0" /> <span
+				id="timeSliderValueLabel">Current Time<span
+				id="timeSliderValue">00:00:00</span></span>
 		</div>
 
-		<button id="button">Play</button>
+		<button id="button" class="btn btn-primary">Play</button>
 
 	</div>
 
+	<script src="../dependencies/second-integration/setPoints.js"></script>
 	<script src="../dependencies/second-integration/createChart.js"></script>
 	<script src="../dependencies/second-integration/createTimeSlider.js"></script>
 	<script src="../dependencies/second-integration/handleButtonClick.js"></script>
