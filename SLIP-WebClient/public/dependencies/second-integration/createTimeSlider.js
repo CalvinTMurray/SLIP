@@ -1,18 +1,21 @@
 $(document).ready(function() {
 
+	var chart = $('#container').highcharts();
+	var questionMark = chart.renderer.image('../assets/images/questionMark.svg', 180, 150, 100, 100);
+	
 	$("#timeSlider").on('slide', function(slideEvt) {
+		
 		$("#timeSliderValue").text(formatHHMMSS(slideEvt.value));
-
-		var chart = $('#container').highcharts();
 		
 		if (points[slideEvt.value] !== null) {
+			$(questionMark.element).remove();
 			chart.series[0].data[0].update(points[slideEvt.value].position);
 			chart.series[0].show();
 		} else {
-			chart.series[0].hide();
+			chart.series[0].hide();	
+			questionMark.add();
 		}
 		
-	
 	});
 
 })

@@ -23,7 +23,7 @@ function startPlayback() {
 		timeSlider.slider('setValue', sliderValue, true);
 		sliderValue++;
 		checkEndReached();
-	}, 500);
+	}, 100);
 }
 
 function checkEndReached() {
