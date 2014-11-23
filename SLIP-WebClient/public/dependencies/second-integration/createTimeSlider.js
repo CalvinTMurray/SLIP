@@ -7,7 +7,7 @@ $(document).ready(function() {
 		
 		$("#timeSliderValue").text(formatHHMMSS(slideEvt.value));
 		
-		if (points[slideEvt.value] !== null) {
+		if (points[slideEvt.value].position !== null) {
 			$(questionMark.element).remove();
 			chart.series[0].data[0].update(points[slideEvt.value].position);
 			chart.series[0].show();
