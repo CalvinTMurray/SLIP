@@ -21,11 +21,15 @@ public class HighChartScatterPlotData implements Serializable{
 	
 	public int[] getPosition() {
 		
-		int[] position = new int[2];
-		
-		position[0] = this.position.xPosition;
-		position[1] = this.position.yPosition;
-		
-		return position;
+		if (position.hasPositionPoint()) {
+			int[] positionArray = new int[2];
+			
+			positionArray[0] = this.position.xPosition;
+			positionArray[1] = this.position.yPosition;
+			
+			return positionArray;
+		} else {
+			return null;
+		}
 	}
 }

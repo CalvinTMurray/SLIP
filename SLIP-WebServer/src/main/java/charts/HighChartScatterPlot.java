@@ -21,7 +21,7 @@ public class HighChartScatterPlot extends AbstractChart<HighChartScatterPlotData
 	
 	private void addData(long timestamp, PositionPoint coords) {
 		System.out.println("inserted HighChartScatterPlotData timestamp: " + timestamp + "\tcoordinates: " + coords);
-		data.add(new HighChartScatterPlotData(timestamp,coords));
+		data.add(new HighChartScatterPlotData(timestamp, coords));
 	}
 	
 	@Override
@@ -33,12 +33,7 @@ public class HighChartScatterPlot extends AbstractChart<HighChartScatterPlotData
 	protected void createChart (long sessionID) {
 		
 		for (PositionPoint point : points) {
-			if (point == null) {
-				System.out.println("Added null coordinate");
-				data.add(null);
-			} else {
-				addData(point.timestamp, point);
-			}
+			addData(point.timestamp, point);
 		}
 		
 		System.out.println("Size of highChartScatterPlot data: " + getData().size());

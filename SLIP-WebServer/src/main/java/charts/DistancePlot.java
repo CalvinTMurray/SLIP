@@ -19,7 +19,7 @@ public class DistancePlot extends AbstractChart<DistancePlotData> {
 		createChart(sessionID);
 	}
 	
-	private void addData(long timestamp, double distance) {
+	private void addData(long timestamp, Double distance) {
 		System.out.println("inserted DistancePlot timestamp: " + timestamp + "\tdistance: " + distance);
 		data.add(new DistancePlotData(timestamp, distance));
 	}
@@ -36,19 +36,44 @@ public class DistancePlot extends AbstractChart<DistancePlotData> {
 		double totalDistance = 0;
 		
 		for (int i = 1; i < points.size(); i++) {
+			
 			PositionPoint currentPoint = points.get(i);
 			
-			if (currentPoint == null) {
-				System.out.println("Added null distance data");
-				data.add(null);
-			} else {
-				double distance = euclideanDistance(previousPoint, points.get(i));
-				totalDistance += distance;
+			if (!previousPoint.hasPositionPoint()) {
 				previousPoint = currentPoint;
-				
-				addData(currentPoint.timestamp, totalDistance);
+				continue;
 			}
+			
+			if (!currentPoint.hasPositionPoint()) {
+				addData(currentPoint.timestamp, null);
+				continue;
+			}
+			
+			double distance = euclideanDistance(previousPoint, currentPoint);
+			totalDistance += distance;
+			previousPoint = currentPoint;
+			
+			addData(currentPoint.timestamp, totalDistance);
 		}
+		
+		
+		
+		
+//		for (int i = 1; i < points.size(); i++) {
+//			PositionPoint currentPoint = points.get(i);
+//			
+//			// TODO need to check that the x and y position are not null
+//			if (currentPoint == null) {
+//				System.out.println("Added null distance data");
+//				data.add(null);
+//			} else {
+//				double distance = euclideanDistance(previousPoint, points.get(i));
+//				totalDistance += distance;
+//				previousPoint = currentPoint;
+//				
+//				addData(currentPoint.timestamp, totalDistance);
+//			}
+//		}
 	}
 	
 	private double euclideanDistance(PositionPoint pointOne, PositionPoint pointTwo) {
