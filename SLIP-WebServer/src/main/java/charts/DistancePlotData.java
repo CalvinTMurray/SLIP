@@ -6,9 +6,9 @@ public class DistancePlotData implements Serializable{
 
 	private static final long serialVersionUID = 3135832287178651143L;
 	private long timestamp;
-	private double distance;
+	private Double distance;
 	
-	public DistancePlotData(long timestamp, double distance) {
+	public DistancePlotData(long timestamp, Double distance) {
 		this.timestamp = timestamp;
 		this.distance = distance;
 	}
@@ -17,7 +17,7 @@ public class DistancePlotData implements Serializable{
 		return timestamp;
 	}
 	
-	public double getDistance() {
+	public Double getDistance() {
 		return distance;
 	}
 }

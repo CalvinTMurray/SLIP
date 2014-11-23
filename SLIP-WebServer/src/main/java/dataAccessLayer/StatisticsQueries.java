@@ -65,7 +65,7 @@ public class StatisticsQueries {
 						") AS \"ClosestPosition\" " +
 						"LIMIT 1";
 		
-		PositionPoint point = null;
+		PositionPoint point = new PositionPoint(timestampExpected, null, null);
 		
 		// TODO create a new class for the row mapper and put it into a new package.
 		// TODO find a way to get rid of this try catch block

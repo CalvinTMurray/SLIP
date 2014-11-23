@@ -1,19 +1,25 @@
 <!doctype html>
-<html>
+<html data-ng-app="mtsModule">
 <head>
 
 <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 <link href="../assets/css/bootstrap-slider.css" rel="stylesheet">
 <link href="../assets/css/timeSlider.css" rel="stylesheet">
+<link href="../assets/css/scrollable-menu.css" rel="stylesheet">
+
 <script src="../assets/js/angular/angular.min.js"></script>
+<script src="../assets/js/angular/ui-bootstrap-tpls-0.12.0.min.js"></script>
 <script src="../assets/js/jQuery/jquery-2.1.1.min.js"></script>
 <script src="../assets/js/bootstrap/bootstrap.min.js"></script>
 <script src="../assets/js/bootstrap/bootstrap-slider.min.js"></script>
 <script src="../assets/js/highcharts/highcharts.js"></script>
 
+<script src="../dependencies/second-integration/setPoints.js"></script>
+
+<script src="../angular-modules/session-dropdown.js"></script>
 
 </head>
-<body style="padding-top: 50px">
+<body style="padding-top: 50px" data-ng-controller="SessionController">
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
@@ -23,11 +29,23 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">SLIP MotionTrackingSystem</a>
+				<a class="navbar-brand" href="#">SLIP MTS</a>
 			</div>
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
+
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false">Sessions<span
+							class="caret"></span>
+					</a>
+						<ul class="dropdown-menu scroll-menu" role="menu">
+<!-- 							<select ng-model="selectedSession" ng-options="session in sessionIDs"></select> -->
+							<li data-ng-repeat="session in sessionIDs"><a data-ng-click="updateData(session.sessionID)">{{session.sessionID}} - {{session.date}}</a></li>
+<!-- 							<li><a href="#">Another action</a></li> -->
+<!-- 							<li><a href="#">Something else here</a></li> -->
+						</ul>
+					</li>
+					
 				</ul>
 			</div>
 		</div>
@@ -35,6 +53,8 @@
 
 	<div id="Second Integration Code">
 
+		Selected Session: {{selectedSession}}
+		
 		<div id="container"></div>
 		<div class="well">
 			<input id="timeSlider" type="text" data-slider-min="0"
@@ -47,7 +67,6 @@
 
 	</div>
 
-	<script src="../dependencies/second-integration/setPoints.js"></script>
 	<script src="../dependencies/second-integration/createChart.js"></script>
 	<script src="../dependencies/second-integration/createTimeSlider.js"></script>
 	<script src="../dependencies/second-integration/handleButtonClick.js"></script>
