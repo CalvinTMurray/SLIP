@@ -17,6 +17,9 @@ $(document).ready(
 						title : {
 							text : ''
 						},
+						exporting : {
+							enabled : false
+						},
 						tooltip : {
 							formatter : function() {
 								return 'Position <br/> x:<b>' + this.x
