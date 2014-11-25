@@ -20,7 +20,7 @@ $(document).ready(function handleClick() {
 
 function startPlayback() {
 	
-	document.getElementById("playButton").innerHTML="Stop";
+	document.getElementById("playButton").innerHTML='<span class="glyphicon glyphicon-pause" aria-hidden="true"></span> Pause'
 	running = true;
 	
 	// Start playback from current slider position
@@ -49,7 +49,7 @@ function shouldContinue() {
 
 function stopPlayback() {
 	running = false;
-	document.getElementById("playButton").innerHTML="Play";
+	document.getElementById("playButton").innerHTML='<span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play';
 	clearInterval(moveSliderAlong);
 }
 
