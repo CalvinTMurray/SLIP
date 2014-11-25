@@ -1,4 +1,5 @@
 $(document).ready(
+		
 		$(function() {
 			$('#playbackGraphContainer').highcharts(
 					{
@@ -22,8 +23,8 @@ $(document).ready(
 						},
 						tooltip : {
 							formatter : function() {
-								return 'Position <br/> x:<b>' + this.x
-										+ '</b> <br/> y:<b>' + this.y + '</b>';
+								return 'Position <br/>x:<b>' + this.x + '</b>' +
+												'<br/>y:<b>' + this.y + '</b>';
 							}
 						},
 						series : [ {
