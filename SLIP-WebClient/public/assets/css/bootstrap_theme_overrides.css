@@ -20,3 +20,22 @@ p, div {
 .sidebar-icon {
 	margin-right: 12px;
 }
+
+.navbar-brand,
+.navbar-nav li a {
+    line-height: 36px;
+    height: 36px;
+    padding-top: 0;
+}
+
+.navbar {
+	padding-top: 6px;
+	border-bottom: 1px solid black;
+}
+
+.navbar-brand-image {
+	height: 36px;
+	width: 36px;
+	float: left;
+	margin-right: 8px;
+}
