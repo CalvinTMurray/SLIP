@@ -17,9 +17,10 @@ angular.module('mtsModule', [])
 	
 	$scope.updateData = function (sessionID) {
 		$scope.selectedSession = sessionID;
-		console.log("i'm updating the data " + sessionID)
+		console.log("Updating the data " + sessionID)
 		
 		setPoints($scope.selectedSession);
+		setDistancePoints($scope.selectedSession);
 		
 	}
 	

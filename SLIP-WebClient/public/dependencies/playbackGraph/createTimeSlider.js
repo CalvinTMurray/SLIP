@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	var chart = $('#container').highcharts();
+	var chart = $('#playbackGraphContainer').highcharts();
 	var questionMark = chart.renderer.image('../assets/images/questionMark.svg', 180, 150, 100, 100);
 	
 	$("#timeSlider").on('slide', function(slideEvt) {
@@ -13,7 +13,9 @@ $(document).ready(function() {
 			chart.series[0].show();
 		} else {
 			chart.series[0].hide();	
-			questionMark.add();
+			questionMark.attr({
+				zIndex: 2
+			}).add();
 		}
 		
 	});

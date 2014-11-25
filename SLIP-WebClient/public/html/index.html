@@ -6,15 +6,18 @@
 <link href="../assets/css/bootstrap-slider.css" rel="stylesheet">
 <link href="../assets/css/timeSlider.css" rel="stylesheet">
 <link href="../assets/css/scrollable-menu.css" rel="stylesheet">
+<link href="../assets/css/customNavbar.css" rel="stylesheet">
 
 <script src="../assets/js/angular/angular.min.js"></script>
 <script src="../assets/js/angular/ui-bootstrap-tpls-0.12.0.min.js"></script>
 <script src="../assets/js/jQuery/jquery-2.1.1.min.js"></script>
 <script src="../assets/js/bootstrap/bootstrap.min.js"></script>
 <script src="../assets/js/bootstrap/bootstrap-slider.min.js"></script>
-<script src="../assets/js/highcharts/highcharts.js"></script>
+<script src="../assets/js/highcharts/highstock.js"></script>
+<script src="../assets/js/highcharts/modules/exporting.js"></script>
 
-<script src="../dependencies/second-integration/setPoints.js"></script>
+<script src="../dependencies/playbackGraph/setPlaybackPoints.js"></script>
+<script src="../dependencies/distanceGraph/setDistancePoints.js"></script>
 
 <script src="../angular-modules/session-dropdown.js"></script>
 
@@ -35,14 +38,11 @@
 				<ul class="nav navbar-nav">
 
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false">Sessions<span
+						data-toggle="dropdown" role="button" aria-expanded="false">Session {{selectedSession}}<span
 							class="caret"></span>
 					</a>
 						<ul class="dropdown-menu scroll-menu" role="menu">
-<!-- 							<select ng-model="selectedSession" ng-options="session in sessionIDs"></select> -->
-							<li data-ng-repeat="session in sessionIDs"><a data-ng-click="updateData(session.sessionID)">{{session.sessionID}} - {{session.date}}</a></li>
-<!-- 							<li><a href="#">Another action</a></li> -->
-<!-- 							<li><a href="#">Something else here</a></li> -->
+							<li data-ng-repeat="session in sessionIDs"><a href="" data-ng-click="updateData(session.sessionID)">{{session.sessionID}} - {{session.date}}</a></li>
 						</ul>
 					</li>
 					
@@ -50,26 +50,36 @@
 			</div>
 		</div>
 	</div>
-
-	<div id="Second Integration Code">
-
-		Selected Session: {{selectedSession}}
-		
-		<div id="container"></div>
-		<div class="well">
-			<input id="timeSlider" type="text" data-slider-min="0"
-				data-slider-step="1" data-slider-value="0" /> <span
-				id="timeSliderValueLabel">Current Time<span
-				id="timeSliderValue">00:00:00</span></span>
+	
+	<br/>
+	
+	<div class="row">
+		<div class="col-md-5">
+			<div id="playbackGraphContainer"></div>
+			<div class="well">
+				<input id="timeSlider" type="text" data-slider-min="0"
+					data-slider-step="1" data-slider-value="0" /> <span
+					id="timeSliderValueLabel">Current Time<span
+					id="timeSliderValue">00:00:00</span></span>
+			</div>
+	
+			<button id="playButton" class="btn btn-primary">Play</button>
+			
+			<button id="resetButton" class="btn btn-primary">Reset</button>
 		</div>
-
-		<button id="button" class="btn btn-primary">Play</button>
-
+		
+		<div class="col-md-6">
+			<div id="distanceGraphContainer"></div>
+		</div>
 	</div>
 
-	<script src="../dependencies/second-integration/createChart.js"></script>
-	<script src="../dependencies/second-integration/createTimeSlider.js"></script>
-	<script src="../dependencies/second-integration/handleButtonClick.js"></script>
+	<script src="../dependencies/playbackGraph/createPlaybackChart.js"></script>
+	<script src="../dependencies/distanceGraph/createDistanceChart.js"></script>
+	
+	<script src="../dependencies/playbackGraph/createTimeSlider.js"></script>
+	<script src="../dependencies/playbackGraph/handleButtonClick.js"></script>
+	
+	
 
 </body>
 </html>

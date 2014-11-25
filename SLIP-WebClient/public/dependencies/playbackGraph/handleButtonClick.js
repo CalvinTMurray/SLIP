@@ -1,39 +1,60 @@
 var running = false;
-var sliderValue = 1;
+var sliderValue;
 var moveSliderAlong;
 
 $(document).ready(function handleClick() {
 	
-	$('#button').click(function() {
+	$('#playButton').click(function() {
 		if (!running) {
 			startPlayback();
 		} else {
 			stopPlayback();
 		}
 	})
+	
+	$('#resetButton').click(function() {
+		resetPlayback();
+	})
 
 })
 
 function startPlayback() {
-	document.getElementById("button").innerHTML="Stop";
+	
+	document.getElementById("playButton").innerHTML="Stop";
 	running = true;
+	
 	// Start playback from current slider position
 	sliderValue = timeSlider.slider('getValue');
+	
 	moveSliderAlong = setInterval(function() {
+		if(!shouldContinue()) {
+			return;
+		};
+
 		timeSlider.slider('setValue', sliderValue, true);
 		sliderValue++;
-		checkEndReached();
+		
 	}, 100);
 }
 
-function checkEndReached() {
-	if (sliderValue > timeSlider.slider('getAttribute', 'max')) {
+function shouldContinue() {
+	
+	if (sliderValue < timeSlider.slider('getAttribute', 'max')) {
+		return true;
+	} else {
 		stopPlayback();
+		return false;
 	}
 }
 
 function stopPlayback() {
-	document.getElementById("button").innerHTML="Play";
 	running = false;
+	document.getElementById("playButton").innerHTML="Play";
 	clearInterval(moveSliderAlong);
+}
+
+function resetPlayback() {
+	stopPlayback();
+	sliderValue = 0;
+	timeSlider.slider('setValue', sliderValue, true);
 }

@@ -1,5 +1,5 @@
-$(document).ready($(function() {
-	console.log(points);
+function createDistanceChart() {
+//	console.log(distancePoints);
 	$('#distanceGraphContainer').highcharts('StockChart', {
 		 chart: {
              zoomType: 'x'
@@ -8,24 +8,31 @@ $(document).ready($(function() {
 		rangeSelector : {
 			buttons : [ {
 				type : 'second',
-				count : 120,
-				text : '120s'
-			}, {
+				count : 30,
+				text : '30s'
+			},
+			{
+				type : 'minute',
+				count : 1,
+				text : '1m'
+			}, 
+			{
 				type : 'minute',
 				count : 5,
 				text : '5m'
-			}, {
+			},
+			{
 				type : 'all',
 				text : 'All'
 			} ],
-			selected : 0
+			selected : 1
 		},
 		title : {
 			text : 'Distance Travelled'
 		},
 		series : [ {
 			name : 'Distance Travelled',
-			data : points,
+			data : distancePoints,
 			type : 'spline',
 			tooltip : {
 				valueDecimals : 2
@@ -33,4 +40,4 @@ $(document).ready($(function() {
 		} ]
 
 	});
-}))
+}

@@ -1,6 +1,6 @@
 $(document).ready(
 		$(function() {
-			$('#container').highcharts(
+			$('#playbackGraphContainer').highcharts(
 					{
 						chart : {
 							width : 455,
@@ -8,7 +8,8 @@ $(document).ready(
 							animation: {
 				                duration: 10
 				            },
-							plotBackgroundImage : '../assets/images/court.svg'
+				            plotBackgroundImage : '../assets/images/blueBackground.svg' 
+					
 						},
 						credits: {
 				            enabled: false
@@ -24,29 +25,27 @@ $(document).ready(
 						},
 						series : [ {
 							name: 'Object',
-							data : [ [ 0, 0 ] ]
+							data : [ [ 0, 0 ] ] ,
+							color: 'white'
 						} ],
 						yAxis : {
 							min : 0,
 							max : 500,
-							gridLineWidth : 0,
+							gridLineWidth : 1,
 							title : {
-								enabled : false
+								text: 'Y coordinate'
 							},
-							labels : {
-								enabled : false
-							},
-							tickLength : 0
+							tickInterval: 50
 						},
 						xAxis : {
 							min : 0,
-							max : 455,
-							labels : {
-								enabled : false
+							max : 500,
+							gridLineWidth : 1,
+							title : {
+								text: 'X coordinate'
 							},
-							tickLength : 0,
-							lineWidth : 0
-
+							tickLength : 3,
+							tickInterval: 50
 						},
 						plotOptions : {
 							series : {
