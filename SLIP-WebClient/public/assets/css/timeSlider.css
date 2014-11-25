@@ -2,15 +2,23 @@
 * CSS sheet for time slider UI component
 */
 .well {
-	background-color: #000000;
+	background-color: #ffffff;
+	border-color:#f44336;
+	margin-left: auto;
+    margin-right: auto;
+    width: 70%;
 }
 
 #timeSliderValue {
-	color: #ffffff;
+	color: #000000;
 	margin-left: 45px;
 }
 
 #timeSliderValueLabel {
 	margin-left: 45px;
-	color: #ffffff;
+	color: #000000;
+}
+
+#playBackControls {
+	float: right;
 }
