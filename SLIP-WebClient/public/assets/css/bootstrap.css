@@ -5,8 +5,8 @@
  */
 
 /*!
- * Generated using the Bootstrap Customizer (http://getbootstrap.com/customize/?id=086789a82aa9f6fed5dd)
- * Config saved to config.json and https://gist.github.com/086789a82aa9f6fed5dd
+ * Generated using the Bootstrap Customizer (http://getbootstrap.com/customize/?id=6faa4edc3acd545a5ab0)
+ * Config saved to config.json and https://gist.github.com/6faa4edc3acd545a5ab0
  */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
@@ -2805,7 +2805,7 @@ fieldset[disabled] .btn {
 .btn-default {
   color: #333333;
   background-color: #ffffff;
-  border-color: #cccccc;
+  border-color: #ffffff;
 }
 .btn-default:hover,
 .btn-default:focus,
@@ -2815,7 +2815,7 @@ fieldset[disabled] .btn {
 .open > .dropdown-toggle.btn-default {
   color: #333333;
   background-color: #e6e6e6;
-  border-color: #adadad;
+  border-color: #e0e0e0;
 }
 .btn-default:active,
 .btn-default.active,
@@ -2841,7 +2841,7 @@ fieldset[disabled] .btn-default:active,
 .btn-default[disabled].active,
 fieldset[disabled] .btn-default.active {
   background-color: #ffffff;
-  border-color: #cccccc;
+  border-color: #ffffff;
 }
 .btn-default .badge {
   color: #ffffff;
