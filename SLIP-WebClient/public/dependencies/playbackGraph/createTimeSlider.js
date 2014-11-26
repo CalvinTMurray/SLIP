@@ -20,8 +20,8 @@ $(document).ready(function() {
 			chart.series[0].data[0].update({
 					marker:{
 						symbol:'url(../assets/images/questionMark.svg)',
-						width: 50,
-						height: 50
+						width: 30,
+						height: 30
 					}
 			});
 		}
