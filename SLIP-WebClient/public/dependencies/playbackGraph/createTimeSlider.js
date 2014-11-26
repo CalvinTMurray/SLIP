@@ -1,21 +1,29 @@
 $(document).ready(function() {
 
 	var chart = $('#playbackGraphContainer').highcharts();
-	var questionMark = chart.renderer.image('../assets/images/questionMark.svg', 180, 150, 100, 100);
 	
 	$("#timeSlider").on('slide', function(slideEvt) {
 		
 		$("#timeSliderValue").text(formatHHMMSS(slideEvt.value));
 		
 		if (points[slideEvt.value].position !== null) {
-			$(questionMark.element).remove();
+			chart.series[0].data[0].update({
+				marker:{
+					symbol:'circle' ,
+					radius: 8
+				}
+			});
+			
 			chart.series[0].data[0].update(points[slideEvt.value].position);
 			chart.series[0].show();
 		} else {
-			chart.series[0].hide();	
-			questionMark.attr({
-				zIndex: 2
-			}).add();
+			chart.series[0].data[0].update({
+					marker:{
+						symbol:'url(../assets/images/questionMark.svg)',
+						width: 50,
+						height: 50
+					}
+			});
 		}
 		
 	});

@@ -2,18 +2,24 @@ angular.module('mtsModule', [])
 
 .controller('SessionController', ['$http', '$scope', function($http, $scope) {
 	
-	$http.get('http://localhost:8080/all-sessions').
+	$scope.selectedChart = 1;
+	
+	$scope.getSessions = function () {
+		$http.get('http://localhost:8080/all-sessions').
 		success(function(data, status, headers, config) {
 			$scope.sessionIDs = data;
 			$scope.selectedSession = data[0].sessionID;
 			
-			$scope.updateData($scope.selectedSession);
+			console.log("dropdown is being selected")
+			
+//			$scope.updateData($scope.selectedSession);
 			
 		}).error(function(data, status, headers, config) {
 			console.log('Error on getting session IDs')
 		});
+	}
 	
-	
+	$scope.getSessions();
 	
 	$scope.updateData = function (sessionID) {
 		$scope.selectedSession = sessionID;
@@ -23,6 +29,5 @@ angular.module('mtsModule', [])
 		setDistancePoints($scope.selectedSession);
 		
 	}
-	
 }])
 

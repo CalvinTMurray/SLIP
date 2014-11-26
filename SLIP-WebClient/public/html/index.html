@@ -7,7 +7,6 @@
 <link href="../assets/css/bootstrap-slider.css" rel="stylesheet">
 <link href="../assets/css/timeSlider.css" rel="stylesheet">
 <link href="../assets/css/scrollable-menu.css" rel="stylesheet">
-<link href="../assets/css/customNavbar.css" rel="stylesheet">
 <link href="../assets/css/bootstrap_theme_overrides.css" rel="stylesheet">
 
 <script src="../assets/js/angular/angular.min.js"></script>
@@ -55,9 +54,9 @@
 	<div class="row" style="padding-top: 20px;">
 		<div class="col-sm-2">
 		    <ul id="session_sidebar" class="nav nav-stacked custom_sidebar">
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
+					<li class="dropdown"><a href="#" class="dropdown-toggle" data-ng-click="getSessions()"
 						data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-search sidebar-icon" aria-hidden="true"></span>Session {{selectedSession}}<span
-							class="caret"></span>
+							class="caret" ></span>
 					</a>
 						<ul class="dropdown-menu scroll-menu" role="menu">
 							<li data-ng-repeat="session in sessionIDs"><a href="" data-ng-click="updateData(session.sessionID)">{{session.sessionID}} - {{session.date}}</a></li>
@@ -66,11 +65,12 @@
         	</ul>
 
           	<ul id="options_sidebar" class="nav nav-stacked custom_sidebar" style="margin-top: 16px;">
-	            <li><a href="#"><span class="glyphicon glyphicon-play-circle sidebar-icon" aria-hidden="true"></span>Position</a></li>
-	            <li><a href="#"><span class="glyphicon glyphicon-th-list sidebar-icon" aria-hidden="true"></span>Distance</a></li>
+	            <li><a href="#" data-ng-click="selectedChart = 1"><span class="glyphicon glyphicon-play-circle sidebar-icon" aria-hidden="true"></span>Position</a></li>
+	            <li><a href="#" data-ng-click="selectedChart = 2"><span class="glyphicon glyphicon-th-list sidebar-icon" aria-hidden="true"></span>Distance</a></li>
         	</ul>
       </div>
-		<div class="col-md-10">
+      
+		<div data-ng-hide="selectedChart !== 1" class="col-md-10">
 			<div id="playbackGraphContainer" style="display: table; margin: 0 auto;"></div>
 			<div class="well" style="display: table; margin: 0 auto; padding-left: -10px;">
 				<input id="timeSlider" type="text" data-slider-min="0"
@@ -84,11 +84,10 @@
 					</div>
 			</div>
 	
-			
 		</div>
 		
-		<div class="col-md-10" style="visibility: hidden;">
-			<div id="distanceGraphContainer"></div>
+		<div data-ng-hide="selectedChart !== 2" class="col-md-10">
+			<div id="distanceGraphContainer" style="display: table; margin: 0 auto;"></div>
 		</div>
 	</div>
 

@@ -23,3 +23,8 @@
 #playBackControls {
 	float: right;
 }
+
+.slider-handle {
+	background-color: #F44336;
+	background-image: linear-gradient(to bottom, #F44336 0%, #EF5350 100%);
+}

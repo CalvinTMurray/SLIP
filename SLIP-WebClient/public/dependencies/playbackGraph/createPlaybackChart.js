@@ -4,7 +4,7 @@ $(document).ready(
 			$('#playbackGraphContainer').highcharts(
 					{
 						chart : {
-							width : 455,
+							width : 500,
 							height : 500,
 							animation: {
 				                duration: 10
@@ -30,30 +30,33 @@ $(document).ready(
 						series : [ {
 							name: 'Object',
 							data : [ [ 0, 0 ] ] ,
-							color: 'white'
+							color: 'black'
 						} ],
 						yAxis : {
 							min : 0,
-							max : 500,
+							max : 70,
 							gridLineWidth : 1,
 							title : {
 								text: 'Y coordinate'
 							},
-							tickInterval: 50
+							tickInterval: 10
 						},
 						xAxis : {
 							min : 0,
-							max : 500,
+							max : 70,
 							gridLineWidth : 1,
 							title : {
 								text: 'X coordinate'
 							},
 							tickLength : 3,
-							tickInterval: 50
+							tickInterval: 10
 						},
 						plotOptions : {
 							series : {
-								animation : false
+								animation : false ,
+								marker: {
+				                    radius: 8
+				                }
 							}
 						}
 					})

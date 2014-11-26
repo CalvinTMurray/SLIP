@@ -34,7 +34,7 @@ function startPlayback() {
 		timeSlider.slider('setValue', sliderValue, true);
 		sliderValue++;
 		
-	}, 100);
+	}, 400);
 }
 
 function shouldContinue() {
