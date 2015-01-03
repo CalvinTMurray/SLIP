@@ -30,6 +30,8 @@ import dataAccessLayer.SessionPayloadQueries;
 import dataAccessLayer.StatisticsQueries;
 import di.configuration.DIConfiguration;
 
+import javax.xml.bind.SchemaOutputResolver;
+
 /**
  * A thread which runs in parallel with the server to generate statistics 
  * @author Calvin.T.Murray
@@ -50,7 +52,7 @@ public class StatisticsThread implements Runnable {
 
 	private Long sessionID;
 	
-	private final String basePathStatistics = "serialized/statistics/";
+	private final String basePathStatistics = "C:/Users/Calvin . T . Murray/Documents/GitHub/SLIP/SLIP-WebServer/serialized/statistics/";
 	private Map<Long,Statistics> loadedStatistics;
 	
 	private StatisticsThread() {
@@ -219,6 +221,7 @@ public class StatisticsThread implements Runnable {
 		String statsFileName = "session-" + statistics.getSessionID();
 		
 		try {
+			System.out.println(new File(basePathStatistics + statsFileName + ".ser").getAbsolutePath());
 			FileOutputStream fileOut = new FileOutputStream(basePathStatistics + statsFileName + ".ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(statistics);
@@ -238,6 +241,7 @@ public class StatisticsThread implements Runnable {
 		
 		File file = new File(basePathStatistics + statsFileName + ".ser");
 		if( !file.exists() ) {
+			System.out.println("File: " + file.toString() + " does not exist");
 			return;
 		}
 		
