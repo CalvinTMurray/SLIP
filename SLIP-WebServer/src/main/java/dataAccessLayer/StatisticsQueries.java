@@ -46,7 +46,7 @@ public class StatisticsQueries {
 	}
 	
 	/**
-	 * Get the corresponding coordinate that has a time stamp closest to the time stamp specified <br>
+	 * Get the corresponding coordinate that has a timestamp closest to the time stamp specified <br>
 	 * We use lowTimestamp and highTimestamp to search within a range around the timestampExpected
 	 * @param sessionID the session ID
 	 * @param timestampExpected the time stamp you want the result to be closest to

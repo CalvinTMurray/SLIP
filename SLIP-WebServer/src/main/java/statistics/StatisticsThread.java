@@ -18,6 +18,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import charts.HeatmapPlot;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.util.StopWatch;
@@ -29,8 +30,6 @@ import dataAccessLayer.SessionPayloadDAO;
 import dataAccessLayer.SessionPayloadQueries;
 import dataAccessLayer.StatisticsQueries;
 import di.configuration.DIConfiguration;
-
-import javax.xml.bind.SchemaOutputResolver;
 
 /**
  * A thread which runs in parallel with the server to generate statistics 
@@ -105,7 +104,6 @@ public class StatisticsThread implements Runnable {
 				if (success) {
 					serializeStatistics(entry.getValue());
 				}
-				
 				stopwatch.stop();
 				System.out.println("Statistics for session ID: " + entry.getKey() + " processed in " + stopwatch.getLastTaskTimeMillis());
 				
@@ -126,6 +124,7 @@ public class StatisticsThread implements Runnable {
 		// TODO Null check
 		Long startTime = statisticsQueries.getMinTime(sessionID);
 		if (startTime == null) {
+			System.out.println("No charts will be added for session ID: " + sessionID + " because no data exists!");
 			return false;
 		}
 
@@ -159,6 +158,7 @@ public class StatisticsThread implements Runnable {
 		
 		statistics.addChart(new HighChartScatterPlot(sessionID, points));
 		statistics.addChart(new DistancePlot(sessionID, points));
+		statistics.addChart(new HeatmapPlot(sessionID, points));
 		
 		return true;
 	}

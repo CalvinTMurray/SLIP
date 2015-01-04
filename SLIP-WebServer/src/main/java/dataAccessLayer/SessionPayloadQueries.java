@@ -82,8 +82,9 @@ public class SessionPayloadQueries extends JdbcDaoSupport implements SessionPayl
 				ps.setInt(3, payload.getY());
 				ps.setLong(4, payload.getTimestamp());
 
-				System.out.println("Inserting payload with session ID: " + sessionID + " x Position: " + payload.getX()
-						+ " y Position: " + payload.getY());
+				System.out.println("	-------------------------------------------------------------------------");
+				System.out.println("		Inserting payload for session ID: " + sessionID + " - Position: (" + payload.getX()
+						+ "," + payload.getY()+")");
 			}
 
 			@Override
