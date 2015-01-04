@@ -9,6 +9,8 @@ import model.Session;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -107,7 +109,7 @@ public class MainController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/position-data", produces = { "application/json" })
-	public @ResponseBody List<?> getData(
+	public @ResponseBody ResponseEntity<List<?>> getData(
 			@RequestParam(value = "sessionID", required = true) long sessionID,
 			@RequestParam(value = "chartType", required = true) ChartType type) {
 		System.out.println("Getting statistics for session " + sessionID
@@ -117,14 +119,15 @@ public class MainController {
 
 		if (statistics == null) {
 			// Empty list if we don't have any statistics yet
-			return new ArrayList<>();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
-			return statistics.getChart(type).getData();
+			return new ResponseEntity<>(statistics.getChart(type).getData(), HttpStatus.OK);
 		}
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/all-sessions", produces = { "application/json" })
 	public @ResponseBody List<Session> getAllSessions() {
+		System.out.println("Retrieving a list of sessions");
 		return sessionPayloadQueries.getAllSessionsIDs();
 	}
 
