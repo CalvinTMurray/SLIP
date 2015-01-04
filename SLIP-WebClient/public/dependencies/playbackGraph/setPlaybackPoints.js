@@ -6,19 +6,23 @@ var timeSlider = $("#timeSlider").slider({
 })
 
 function setPoints(sessionID) {
-	
-	$.getJSON("http://localhost:8080/position-data", {
+
+	$.getJSON("http://192.168.0.15:8080/position-data", {
 		sessionID : sessionID,
 		chartType : "HIGHCHART_SCATTER_PLOT"
-	}, function(json) {
+	})
+		.success(function(json) {
 
-		points = json;
-		timeSlider = $("#timeSlider").slider({
-			max : points.length - 1
-		});
+			points = json;
+			timeSlider = $("#timeSlider").slider({
+				max : points.length - 1
+			});
 
-		console.log(points);
+			console.log(points);
 
-	});
+		})
+		.error(function (response) {
+
+		})
 
 };

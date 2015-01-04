@@ -1,23 +1,31 @@
 var distancePoints = new Array();
 
 function setDistancePoints(sessionID) {
-	$.getJSON("http://localhost:8080/position-data", {
+	$.getJSON("http://192.168.0.15:8080/position-data", {
 		sessionID : sessionID,
 		chartType : "DISTANCE"
-	}, function(json) {
+	})
+		.success (function(json) {
 		createPointsDataArray(json);
+		createDistanceChart();
+	})
+		.error (function() {
+		distancePoints = [];
 		createDistanceChart();
 	});
 }
 
 
 function createPointsDataArray(jsonPoints) {
+	var tempPoints = [];
 	var i;
 	for (i = 0; i < jsonPoints.length; i++) {
 		var jsonPoint = jsonPoints[i];
 		var dataPoint = [ Math.floor(jsonPoint.timestamp / 1000) * 1000, jsonPoint.distance ];
-		distancePoints.push(dataPoint);
+		tempPoints.push(dataPoint);
 	}
+
+	distancePoints = tempPoints;
 	
 	console.log(distancePoints);
 }

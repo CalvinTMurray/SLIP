@@ -16,7 +16,7 @@ $(document).ready(function handleClick() {
 		resetPlayback();
 	})
 
-})
+});
 
 function startPlayback() {
 	

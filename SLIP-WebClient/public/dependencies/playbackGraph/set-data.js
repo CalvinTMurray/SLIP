@@ -17,7 +17,7 @@ module.controller('ChartController', function($scope, $http, $timeout) {
 			
 		}
 		console.log($scope.points);
-	}
+	};
 	
 	
 	$scope.addHighChart = function() {
@@ -65,5 +65,3 @@ module.controller('ChartController', function($scope, $http, $timeout) {
 	})
 
 });
-
-module.directive('sport')
