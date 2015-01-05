@@ -41,16 +41,13 @@ public class StatisticsThread implements Runnable {
 	// Automatic dependency injection on the statisticsQueries
 	private static ApplicationContext ctx = new AnnotationConfigApplicationContext(DIConfiguration.class);
 	public static StatisticsQueries statisticsQueries = ctx.getBean(StatisticsQueries.class);
-	public static SessionPayloadDAO sessionPayloadQueries = ctx.getBean(SessionPayloadQueries.class);
-	
+
 	private static StatisticsThread instance;
 	
 	private Queue<Long> newSessions;
 	private Map<Long, Statistics> pendingSessions;
 	private Map<Long, Statistics> completedSessions;
 
-	private Long sessionID;
-	
 	private final String basePathStatistics = "C:/Users/Calvin . T . Murray/Documents/GitHub/SLIP/SLIP-WebServer/serialized/statistics/";
 	private Map<Long,Statistics> loadedStatistics;
 	
@@ -77,6 +74,7 @@ public class StatisticsThread implements Runnable {
 
 			synchronized (pendingSessions) {
 
+				Long sessionID;
 				while ((sessionID = newSessions.poll()) != null) {
 					System.out.println("Initialising statistics for SessionID: " + sessionID);
 					pendingSessions.put(sessionID, new Statistics(sessionID));
@@ -121,7 +119,6 @@ public class StatisticsThread implements Runnable {
 		
 		long sessionID = statistics.getSessionID();
 
-		// TODO Null check
 		Long startTime = statisticsQueries.getMinTime(sessionID);
 		if (startTime == null) {
 			System.out.println("No charts will be added for session ID: " + sessionID + " because no data exists!");
@@ -138,28 +135,31 @@ public class StatisticsThread implements Runnable {
 		System.out.println("SessionID: " + sessionID);
 		System.out.println("startTime: " + startTime);
 		System.out.println("endTime: " + endTime);
-		System.out.println("Game duration: " + duration);
-		
+
 		for (int i = 0; i < timeSlices.size(); i++) {
 			PositionPoint point;
 			long currentTimeSlice = timeSlices.get(i);
-			
-			
-			if (i == timeSlices.size() - 1) { // At the end
+
+
+			if (i == 0 && timeSlices.size() == 1) { // At the start and there is only one point
+				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, currentTimeSlice, currentTimeSlice);
+			} else if (i == timeSlices.size() - 1) { // At the end
 				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), endTime);
 			} else if (i == 0) { // At the start with time slices still to process
 				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, 0, timeSlices.get(i+1));
 			} else { // Processing points somewhere in the middle
 				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), timeSlices.get(i + 1));
 			}
-			
+
 			points.add(point);
 		}
-		
+
 		statistics.addChart(new HighChartScatterPlot(sessionID, points));
 		statistics.addChart(new DistancePlot(sessionID, points));
 		statistics.addChart(new HeatmapPlot(sessionID, points));
-		
+
+		System.out.println("Session duration: " + duration);
+
 		return true;
 	}
 

@@ -30,6 +30,8 @@ public class HeatmapPlot extends AbstractChart<int[]> {
 
     @Override
     protected void createChart(long sessionID) {
+        System.out.println("\nCREATING HEATMAP PLOT");
+
         int numberOfxGrids = 7;
         int numberOfyGrids = 7;
         double width_and_height = 10; // Each grid square is 10 x 10;

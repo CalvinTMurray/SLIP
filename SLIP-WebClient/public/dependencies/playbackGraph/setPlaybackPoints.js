@@ -22,7 +22,7 @@ function setPoints(sessionID) {
 
 		})
 		.error(function (response) {
-
+			points = [];
 		})
 
-};
+}
