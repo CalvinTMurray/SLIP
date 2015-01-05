@@ -31,7 +31,9 @@ public class DistancePlot extends AbstractChart<DistancePlotData> {
 	
 	@Override
 	protected void createChart (long sessionID) {
-		
+
+		System.out.println("\nCREATING DISTANCE PLOT");
+
 		PositionPoint previousPoint = points.get(0);
 		double totalDistance = 0;
 		
@@ -55,25 +57,7 @@ public class DistancePlot extends AbstractChart<DistancePlotData> {
 			
 			addData(currentPoint.timestamp, totalDistance);
 		}
-		
-		
-		
-		
-//		for (int i = 1; i < points.size(); i++) {
-//			PositionPoint currentPoint = points.get(i);
-//			
-//			// TODO need to check that the x and y position are not null
-//			if (currentPoint == null) {
-//				System.out.println("Added null distance data");
-//				data.add(null);
-//			} else {
-//				double distance = euclideanDistance(previousPoint, points.get(i));
-//				totalDistance += distance;
-//				previousPoint = currentPoint;
-//				
-//				addData(currentPoint.timestamp, totalDistance);
-//			}
-//		}
+
 	}
 	
 	private double euclideanDistance(PositionPoint pointOne, PositionPoint pointTwo) {

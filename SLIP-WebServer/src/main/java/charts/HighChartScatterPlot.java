@@ -31,7 +31,9 @@ public class HighChartScatterPlot extends AbstractChart<HighChartScatterPlotData
 	
 	@Override
 	protected void createChart (long sessionID) {
-		
+
+		System.out.println("\nCREATING HIGH CHART SCATTER PLOT (Playback Graph)");
+
 		for (PositionPoint point : points) {
 			addData(point.timestamp, point);
 		}
