@@ -1,11 +1,11 @@
 $(document).ready(function() {
 
 	var chart = $('#playbackGraphContainer').highcharts();
-	
+
 	$("#timeSlider").on('slide', function(slideEvt) {
-		
+
 		$("#timeSliderValue").text(formatHHMMSS(slideEvt.value));
-		
+
 		if (points[slideEvt.value].position !== null) {
 			chart.series[0].data[0].update({
 				marker:{
@@ -13,19 +13,19 @@ $(document).ready(function() {
 					radius: 8
 				}
 			});
-			
+
 			chart.series[0].data[0].update(points[slideEvt.value].position);
 			chart.series[0].show();
 		} else {
 			chart.series[0].data[0].update({
-					marker:{
-						symbol:'url(../assets/images/questionMark.svg)',
-						width: 30,
-						height: 30
-					}
+				marker:{
+					symbol:'url(../assets/images/questionMark.svg)',
+					width: 30,
+					height: 30
+				}
 			});
 		}
-		
+
 	});
 
 })

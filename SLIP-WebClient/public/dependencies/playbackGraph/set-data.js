@@ -1,25 +1,25 @@
 var module = angular.module('secondIntegrationModule', [])
 
-module.controller('ChartController', function($scope, $http, $timeout) { 
-	
+module.controller('ChartController', function($scope, $http, $timeout) {
+
 	$scope.addPoints = function () {
-		var i; 
+		var i;
 		$scope.points = [];
 		for (i = 0 ; i < 1000 ; i++) {
 			var r = 100;
-			var x = r*Math.sin(i*Math.PI/180)+250; 
+			var x = r*Math.sin(i*Math.PI/180)+250;
 			var y = r*Math.cos(i*Math.PI/180)+250;
-			
+
 			$scope.points[i] = {
-					"timestamp" : i,
-					"coords" : [ [x, y] ]
+				"timestamp" : i,
+				"coords" : [ [x, y] ]
 			};
-			
+
 		}
 		console.log($scope.points);
 	};
-	
-	
+
+
 	$scope.addHighChart = function() {
 		$('#container').highcharts({
 			chart : {
@@ -42,7 +42,7 @@ module.controller('ChartController', function($scope, $http, $timeout) {
 	};
 
 	//----------------------------------------------------------
-	
+
 	$("#timeSlider").slider();
 	$("#timeSlider").on('slide', function(slideEvt) {
 		$("#timeSliderValue").text(slideEvt.value);
@@ -52,7 +52,7 @@ module.controller('ChartController', function($scope, $http, $timeout) {
 	});
 
 	//----------------------------------------------------
-	
+
 	var i = 0;
 	$('#button').click(function() {
 

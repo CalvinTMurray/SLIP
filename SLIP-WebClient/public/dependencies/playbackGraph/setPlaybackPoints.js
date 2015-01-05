@@ -1,8 +1,8 @@
 var points = new Array();
 $(document).ready(function() {
-var timeSlider = $("#timeSlider").slider({
-	max : -1
-});
+	var timeSlider = $("#timeSlider").slider({
+		max : -1
+	});
 })
 
 function setPoints(sessionID) {

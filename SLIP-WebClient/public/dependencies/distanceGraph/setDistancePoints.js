@@ -26,6 +26,6 @@ function createPointsDataArray(jsonPoints) {
 	}
 
 	distancePoints = tempPoints;
-	
+
 	console.log(distancePoints);
 }
