@@ -8,7 +8,7 @@ $(document).ready(function() {
 
 		if (points[slideEvt.value].position !== null) {
 			chart.series[0].data[0].update({
-				marker:{
+				marker: {
 					symbol:'circle' ,
 					radius: 8
 				}

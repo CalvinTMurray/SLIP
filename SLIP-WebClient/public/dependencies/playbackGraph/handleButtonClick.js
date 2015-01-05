@@ -5,6 +5,7 @@ var moveSliderAlong;
 $(document).ready(function handleClick() {
 
 	$('#playButton').click(function() {
+
 		if (!running) {
 			startPlayback();
 		} else {
