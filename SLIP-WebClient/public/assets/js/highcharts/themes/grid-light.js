@@ -37,6 +37,9 @@ Highcharts.theme = {
 			fontSize: '13px'
 		}
 	},
+	// *MODIFICATION* - Customisation of x axis elements should be ignored
+	// as graph creation scripts handle this
+	/*
 	xAxis: {
 		gridLineWidth: 1,
 		labels: {
@@ -46,7 +49,7 @@ Highcharts.theme = {
 		}
 	},
 	yAxis: {
-		minorTickInterval: 'auto',
+		// minorTickInterval: 'auto',
 		title: {
 			style: {
 				textTransform: 'uppercase'
@@ -63,7 +66,7 @@ Highcharts.theme = {
 			lineColor: '#404048'
 		}
 	},
-
+	*/
 
 	// General
 	background2: '#F0F0EA'

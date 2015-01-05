@@ -32,7 +32,7 @@ angular.module('mtsModule', [])
 
 			setPoints($scope.selectedSession);
 			setDistancePoints($scope.selectedSession);
-			setHeapmapPoints($scope.selectedSession);
+			setHeatmapPoints($scope.selectedSession);
 
 		}
 	}]);
