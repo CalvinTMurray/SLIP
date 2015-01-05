@@ -128,7 +128,21 @@ public class MainController {
 	@RequestMapping(method = RequestMethod.GET, value = "/all-sessions", produces = { "application/json" })
 	public @ResponseBody List<Session> getAllSessions() {
 		System.out.println("Retrieving a list of sessions");
-		return sessionPayloadQueries.getAllSessionsIDs();
+
+		// --- For testing purposes --- START
+		ArrayList<Session> sessions = new ArrayList<>();
+
+		for (int i = 1; i <= 19; i++) {
+			Session s = new Session();
+			s.setSessionID(i);
+			sessions.add(s);
+		}
+
+		return sessions;
+
+		// --- For testins purposes --- END
+
+//		return sessionPayloadQueries.getAllSessionsIDs();
 	}
 
 }
