@@ -3,33 +3,21 @@
  */
 package statistics;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
+import charts.DistancePlot;
 import charts.HeatmapPlot;
+import charts.HighChartScatterPlot;
+import dataAccessLayer.StatisticsQueries;
+import di.configuration.DIConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.util.StopWatch;
-
 import statistics.Time.TimeValue;
-import charts.DistancePlot;
-import charts.HighChartScatterPlot;
-import dataAccessLayer.SessionPayloadDAO;
-import dataAccessLayer.SessionPayloadQueries;
-import dataAccessLayer.StatisticsQueries;
-import di.configuration.DIConfiguration;
+
+import java.io.*;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * A thread which runs in parallel with the server to generate statistics 
