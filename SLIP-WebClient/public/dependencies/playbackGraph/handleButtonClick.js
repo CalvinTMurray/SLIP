@@ -40,7 +40,7 @@ function startPlayback() {
 
 function shouldContinue() {
 
-	if (sliderValue < timeSlider.slider('getAttribute', 'max')) {
+	if (sliderValue <= timeSlider.slider('getAttribute', 'max')) {
 		return true;
 	} else {
 		stopPlayback();
