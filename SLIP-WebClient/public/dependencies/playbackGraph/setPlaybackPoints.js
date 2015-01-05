@@ -1,9 +1,9 @@
 var points = new Array();
 $(document).ready(function() {
-var timeSlider = $("#timeSlider").slider({
-	max : -1
+	var timeSlider = $("#timeSlider").slider({
+		max : -1
+	});
 });
-})
 
 function setPoints(sessionID) {
 
@@ -14,15 +14,23 @@ function setPoints(sessionID) {
 		.success(function(json) {
 
 			points = json;
-			timeSlider = $("#timeSlider").slider({
-				max : points.length - 1
-			});
+
+			setTimesliderMax();
 
 			console.log(points);
 
 		})
 		.error(function (response) {
-			points = [];
+			points = [{"position":[0,0]}];
+
+			setTimesliderMax();
 		})
 
+
+}
+
+function setTimesliderMax() {
+	timeSlider = $("#timeSlider").slider({
+		max : points.length - 1
+	});
 }

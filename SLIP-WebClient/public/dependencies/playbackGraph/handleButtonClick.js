@@ -3,15 +3,16 @@ var sliderValue;
 var moveSliderAlong;
 
 $(document).ready(function handleClick() {
-	
+
 	$('#playButton').click(function() {
+
 		if (!running) {
 			startPlayback();
 		} else {
 			stopPlayback();
 		}
-	})
-	
+	});
+
 	$('#resetButton').click(function() {
 		resetPlayback();
 	})
@@ -19,26 +20,26 @@ $(document).ready(function handleClick() {
 });
 
 function startPlayback() {
-	
+
 	document.getElementById("playButton").innerHTML='<span class="glyphicon glyphicon-pause" aria-hidden="true"></span> Pause'
 	running = true;
-	
+
 	// Start playback from current slider position
 	sliderValue = timeSlider.slider('getValue');
-	
+
 	moveSliderAlong = setInterval(function() {
 		if(!shouldContinue()) {
 			return;
-		};
+		}
 
 		timeSlider.slider('setValue', sliderValue, true);
 		sliderValue++;
-		
+
 	}, 400);
 }
 
 function shouldContinue() {
-	
+
 	if (sliderValue < timeSlider.slider('getAttribute', 'max')) {
 		return true;
 	} else {

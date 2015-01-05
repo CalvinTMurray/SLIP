@@ -1,9 +1,9 @@
 function createDistanceChart() {
 //	console.log(distancePoints);
 	$('#distanceGraphContainer').highcharts('StockChart', {
-		 chart: {
-             zoomType: 'x'
-         },
+		chart: {
+			zoomType: 'x'
+		},
 
 		rangeSelector : {
 			buttons : [ {
@@ -11,20 +11,20 @@ function createDistanceChart() {
 				count : 30,
 				text : '30s'
 			},
-			{
-				type : 'minute',
-				count : 1,
-				text : '1m'
-			}, 
-			{
-				type : 'minute',
-				count : 5,
-				text : '5m'
-			},
-			{
-				type : 'all',
-				text : 'All'
-			} ],
+				{
+					type : 'minute',
+					count : 1,
+					text : '1m'
+				},
+				{
+					type : 'minute',
+					count : 5,
+					text : '5m'
+				},
+				{
+					type : 'all',
+					text : 'All'
+				} ],
 			selected : 1
 		},
 		title : {
