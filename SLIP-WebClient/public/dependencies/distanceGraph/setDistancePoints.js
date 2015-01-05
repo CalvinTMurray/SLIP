@@ -1,7 +1,7 @@
 var distancePoints = new Array();
 
 function setDistancePoints(sessionID) {
-	$.getJSON("http://192.168.0.15:8080/position-data", {
+	$.getJSON("http://localhost:8080/position-data", {
 		sessionID : sessionID,
 		chartType : "DISTANCE"
 	})

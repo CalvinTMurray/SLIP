@@ -7,7 +7,7 @@ $(document).ready(function() {
 
 function setPoints(sessionID) {
 
-	$.getJSON("http://192.168.0.15:8080/position-data", {
+	$.getJSON("http://localhost:8080/position-data", {
 		sessionID : sessionID,
 		chartType : "HIGHCHART_SCATTER_PLOT"
 	})

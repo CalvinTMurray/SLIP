@@ -7,7 +7,7 @@ angular.module('mtsModule', [])
 		$scope.selectedSession = null;
 
 		$scope.getSessions = function () {
-			$http.get('http://192.168.0.15:8080/all-sessions')
+			$http.get('http://localhost:8080/all-sessions')
 				.success(function(data, status, headers, config) {
 					$scope.sessionIDs = data;
 
@@ -32,6 +32,7 @@ angular.module('mtsModule', [])
 
 			setPoints($scope.selectedSession);
 			setDistancePoints($scope.selectedSession);
+			setHeapmapPoints($scope.selectedSession);
 
 		}
 	}]);
