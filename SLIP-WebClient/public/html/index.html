@@ -66,7 +66,8 @@
 
           	<ul id="options_sidebar" class="nav nav-stacked custom_sidebar" style="margin-top: 16px;">
 	            <li><a href="#" data-ng-click="selectedChart = 1"><span class="glyphicon glyphicon-play-circle sidebar-icon" aria-hidden="true"></span>Position</a></li>
-	            <li><a href="#" data-ng-click="selectedChart = 2"><span class="glyphicon glyphicon-th-list sidebar-icon" aria-hidden="true"></span>Distance</a></li>
+	            <li><a href="#" data-ng-click="selectedChart = 2"><span class="glyphicon glyphicon-stats sidebar-icon" aria-hidden="true"></span>Distance</a></li>
+				<li><a href="#" data-ng-click="selectedChart = 3"><span class="glyphicon glyphicon-fire sidebar-icon" aria-hidden="true"></span>Heatmap</a></li>
         	</ul>
       </div>
       
@@ -88,6 +89,10 @@
 		
 		<div data-ng-hide="selectedChart !== 2" class="col-md-10">
 			<div id="distanceGraphContainer" style="display: table; margin: 0 auto;"></div>
+		</div>
+
+		<div data-ng-hide="selectedChart !== 3" class="col-md-10">
+			<div id="heatmapGraphContainer" style="display: table; margin: 0 auto;"></div>
 		</div>
 	</div>
 
