@@ -9,7 +9,7 @@ $(document).ready(
 					animation: {
 						duration: 10
 					},
-					plotBackgroundColor: '#03A9F4'
+					plotBackgroundColor: '#0096D1'
 
 				},
 				credits: {

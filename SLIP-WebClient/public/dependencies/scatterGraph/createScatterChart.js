@@ -7,7 +7,7 @@ function createScatterChart() {
 				duration: 10
 			},
 			type:'scatter',
-			plotBackgroundColor: '#03A9F4'
+			plotBackgroundColor: '#0096D1'
 		},
 		credits: {
 			enabled: false
