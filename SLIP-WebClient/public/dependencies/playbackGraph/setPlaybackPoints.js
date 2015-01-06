@@ -14,16 +14,18 @@ function setPoints(sessionID) {
 		.success(function(json) {
 
 			points = json;
-
 			setTimesliderMax();
-
+			resetPlayback(); // Reset playback just in case we are playing data from another session
 			console.log(points);
 
 		})
 		.error(function (response) {
-			points = [{"position":[0,0]}];
 
+			points = [{"position":[0,0]}];
 			setTimesliderMax();
+			resetPlayback(); // Reset playback just in case we are playing data from another session
+			console.log(points);
+
 		})
 
 

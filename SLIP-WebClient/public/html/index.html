@@ -21,6 +21,8 @@
 	<script src="../dependencies/playbackGraph/setPlaybackPoints.js"></script>
 	<script src="../dependencies/distanceGraph/setDistancePoints.js"></script>
 	<script src="../dependencies/heatmapGraph/setHeatmapPoints.js"></script>
+	<script src="../dependencies/scatterGraph/setScatterPoints.js"></script>
+
 
 
 	<script src="../angular-modules/session-dropdown.js"></script>
@@ -70,6 +72,7 @@
 			<li><a href="#" data-ng-click="selectedChart = 1"><span class="glyphicon glyphicon-play-circle sidebar-icon" aria-hidden="true"></span>Position</a></li>
 			<li><a href="#" data-ng-click="selectedChart = 2"><span class="glyphicon glyphicon-signal sidebar-icon" aria-hidden="true"></span>Distance</a></li>
 			<li><a href="#" data-ng-click="selectedChart = 3"><span class="glyphicon glyphicon-fire sidebar-icon" aria-hidden="true"></span>Heatmap</a></li>
+			<li><a href="#" data-ng-click="selectedChart = 4"><span class="glyphicon glyphicon-th sidebar-icon" aria-hidden="true"></span>Scatter</a></li>
 		</ul>
 	</div>
 
@@ -98,14 +101,27 @@
 		<div id="heatmapGraphContainer" style="display: table; margin: 0 auto;"></div>
 	</div>
 
+	<div data-ng-hide="selectedChart !== 4" class="col-md-10">
+		<div id="scatterGraphContainer" style="display: table; margin: 0 auto;"></div>
+		<div class='wrapper text-center'>
+		<div id="toggleControls" class="btn-group" style="margin-top: -5px;">
+			<button id="markerButton" class="btn btn-primary"><span  aria-hidden="true"></span>Hide Markers</button>
+			<button id="lineButton" class="btn btn-primary"><span aria-hidden="true"></span>Hide Line</button>
+		</div>
+		</div>
+	</div>
+
 </div>
 
 <script src="../dependencies/playbackGraph/createPlaybackChart.js"></script>
 <script src="../dependencies/distanceGraph/createDistanceChart.js"></script>
 <script src="../dependencies/heatmapGraph/createHeatmapChart.js"></script>
+<script src="../dependencies/scatterGraph/createScatterChart.js"></script>
+
 
 <script src="../dependencies/playbackGraph/createTimeSlider.js"></script>
 <script src="../dependencies/playbackGraph/handleButtonClick.js"></script>
+<script src="../dependencies/scatterGraph/handleScatterGraphButtonClicks.js"></script>
 
 </body>
 </html>

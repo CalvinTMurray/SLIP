@@ -4,7 +4,9 @@ function createDistanceChart() {
 		chart: {
 			zoomType: 'x'
 		},
-
+		credits: {
+      		enabled: false
+     	},
 		rangeSelector : {
 			buttons : [ {
 				type : 'second',

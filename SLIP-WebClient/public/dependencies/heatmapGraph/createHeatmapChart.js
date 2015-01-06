@@ -1,8 +1,9 @@
 function createHeatmapChart() {
-console.log(heatmapPoints);
     $('#heatmapGraphContainer').highcharts({
         chart: {
             type: 'heatmap',
+            width : 500,
+            height : 500
         },
         credits: {
 		    enabled: false
@@ -14,13 +15,15 @@ console.log(heatmapPoints);
             categories: ['0-9', '10-19', '20-29', '30-39', '40-49' , '50-59' , '60-69'],
             title: {
                 text:'Y Coordinate Range'
-            }
+            },
+            min:0
         },
         xAxis: {
             categories: ['0-9', '10-19', '20-29', '30-39', '40-49' , '50-59' , '60-69'],
             title:{
                 text:'X Coordinate Range'
-            }
+            },
+            min:0
         },
         tooltip: {
             formatter: function () {

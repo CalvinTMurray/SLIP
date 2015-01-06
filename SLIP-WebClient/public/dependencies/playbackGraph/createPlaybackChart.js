@@ -9,14 +9,14 @@ $(document).ready(
 					animation: {
 						duration: 10
 					},
-					plotBackgroundImage : '../assets/images/blueBackground.svg'
+					plotBackgroundColor: '#03A9F4'
 
 				},
 				credits: {
 					enabled: false
 				},
 				title : {
-					text : ''
+					text : 'Position Playback'
 				},
 				exporting : {
 					enabled : false

@@ -8,10 +8,12 @@ function setHeatmapPoints(sessionID) {
 		.success (function(json) {
 		heatmapPoints = json;
 		createHeatmapChart();
+		console.log(heatmapPoints);
 	})
 		.error (function() {
 		heatmapPoints = [];
 		createHeatmapChart();
+		console.log(heatmapPoints);
 	});
 }
 
