@@ -32,9 +32,9 @@ public class HeatmapPlot extends AbstractChart<int[]> {
     protected void createChart(long sessionID) {
         System.out.println("\nCREATING HEATMAP PLOT");
 
-        int numberOfxGrids = 7;
-        int numberOfyGrids = 7;
-        double width_and_height = 10; // Each grid square is 10 x 10;
+        int numberOfxGrids = 14;
+        int numberOfyGrids = 14;
+        double width_and_height = 5; // Each grid square is 10 x 10;
 
         int[][] grid = new int[numberOfxGrids][numberOfyGrids];
 
@@ -47,7 +47,7 @@ public class HeatmapPlot extends AbstractChart<int[]> {
             int gridY = (int) ((p.yPosition/(numberOfyGrids*width_and_height)) * numberOfyGrids);
 
             System.out.println("Coordinate: " + p + " gridX: " + gridX + " gridY: " + gridY);
-            grid[gridX][gridY]= grid[gridX][gridY] + 1;
+            grid[gridX][gridY] += 1;
         }
 
         for (int i = 0; i < numberOfxGrids; i++) {

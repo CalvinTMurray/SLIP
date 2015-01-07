@@ -1,36 +1,23 @@
 package controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import model.ServerFrame;
-import model.ServerPayload;
-import model.Session;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import statistics.Statistics;
-import statistics.StatisticsThread;
 import charts.ChartType;
 import dataAccessLayer.SessionPayloadDAO;
 import dataAccessLayer.SessionPayloadQueries;
-import di.configuration.DIConfiguration;
+import model.ServerFrame;
+import model.ServerPayload;
+import model.Session;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import statistics.Statistics;
+import statistics.StatisticsThread;
+
+import java.util.List;
 
 @RestController
 public class MainController {
 
-
-	private ApplicationContext ctx = new AnnotationConfigApplicationContext(DIConfiguration.class);
-	private SessionPayloadDAO sessionPayloadQueries = ctx.getBean(SessionPayloadQueries.class);
+	private SessionPayloadDAO sessionPayloadQueries = new SessionPayloadQueries();
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/test", headers = { "Content-type=application/json" }, produces = { "application/json" })
 	public @ResponseBody String test(@RequestBody String payload) {
@@ -130,19 +117,19 @@ public class MainController {
 		System.out.println("Retrieving a list of sessions");
 
 		// --- For testing purposes --- START
-		ArrayList<Session> sessions = new ArrayList<>();
-
-		for (int i = 1; i <= 19; i++) {
-			Session s = new Session();
-			s.setSessionID(i);
-			sessions.add(s);
-		}
-
-		return sessions;
+//		ArrayList<Session> sessions = new ArrayList<>();
+//
+//		for (int i = 1; i <= 19; i++) {
+//			Session s = new Session();
+//			s.setSessionID(i);
+//			sessions.add(s);
+//		}
+//
+//		return sessions;
 
 		// --- For testins purposes --- END
 
-//		return sessionPayloadQueries.getAllSessionsIDs();
+		return sessionPayloadQueries.getAllSessionsIDs();
 	}
 
 }

@@ -1,62 +1,31 @@
 package dataAccessLayer;
 
+import model.ServerFrame;
+import model.ServerPayload;
+import model.Session;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.RowMapper;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
-
-import model.ServerFrame;
-import model.ServerPayload;
-import model.Session;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public class SessionPayloadQueries extends JdbcDaoSupport implements SessionPayloadDAO {
-
-	@Autowired
-	private DataSource dataSource;
-	private JdbcTemplate jdbcTemplateObject;
-
-//	@Autowired
-//	@Override
-//	public void setDataSource(DataSource dataSource) {
-//		System.out.println("setDataSource. Datasource: " + (dataSource != null));
-//		jdbcTemplateObject = new JdbcTemplate(dataSource);
-//	}
-
-//	public JdbcTemplate getJdbcTemplate(){
-//		return jdbcTemplateObject;
-//	}
-
-	@PostConstruct
-	private void initialise() {
-		setDataSource(dataSource);
-		jdbcTemplateObject = getJdbcTemplate();
-	}
+public class SessionPayloadQueries extends DAO implements SessionPayloadDAO {
 
 	@Override
-	public List<ServerPayload> getAllPayloads(int sessionID) {
+	public List<ServerPayload> getAllPayloads(long sessionID) {
 		String sql =	"SELECT \"SessionID\", \"xPosition\", \"yPosition\", \"Timestamp\" " +
 				"FROM \"\" " + 
 				"WHERE \"SessionID\" = ?";
 
 		System.out.println("listUsers jdbcTemplateObject is null: " + (jdbcTemplateObject==null));
-		List<ServerPayload> payloads = jdbcTemplateObject.query(sql, new Object[] {sessionID}, new ServerPayloadMapper());
-		return payloads;
+		return jdbcTemplateObject.query(sql, new Object[] {sessionID}, new ServerPayloadMapper());
 	}
 
 	@Override
-	public ServerPayload getPayload(int sessionID, int payloadID) {
+	public ServerPayload getPayload(long sessionID, long payloadID) {
 		String sql = 	"SELECT \"SessionID\", \"xPosition\", \"yPosition\" " +
 						"FROM \"SessionPayload\" " + 
 						"WHERE \"SessionID\" = ? AND \"PayloadID\" = ?";
@@ -95,7 +64,7 @@ public class SessionPayloadQueries extends JdbcDaoSupport implements SessionPayl
 	}
 
 	@Override
-	public void insertPayload(int sessionID, ServerPayload payload) {
+	public void insertPayload(long sessionID, ServerPayload payload) {
 		String sql = 	"INSERT INTO \"SessionPayload\" (\"SessionID\", \"xPosition\", \"yPosition\") " +
 						"VALUES (?,?,?)";
 

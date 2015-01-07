@@ -6,10 +6,8 @@ package statistics;
 import charts.DistancePlot;
 import charts.HeatmapPlot;
 import charts.HighChartScatterPlot;
+import dataAccessLayer.StatisticsDAO;
 import dataAccessLayer.StatisticsQueries;
-import di.configuration.DIConfiguration;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.util.StopWatch;
 import statistics.Time.TimeValue;
 
@@ -27,8 +25,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class StatisticsThread implements Runnable {
 	
 	// Automatic dependency injection on the statisticsQueries
-	private static ApplicationContext ctx = new AnnotationConfigApplicationContext(DIConfiguration.class);
-	public static StatisticsQueries statisticsQueries = ctx.getBean(StatisticsQueries.class);
+	public static StatisticsDAO statisticsQueries = new StatisticsQueries();
 
 	private static StatisticsThread instance;
 	

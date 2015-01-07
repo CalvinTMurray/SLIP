@@ -1,32 +1,13 @@
 package dataAccessLayer;
 
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowMapper;
+import statistics.PositionPoint;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
-
-import statistics.PositionPoint;
-
-@Repository
-public class StatisticsQueries {
-	
-	private JdbcTemplate jdbcTemplateObject;
-
-	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		System.out.println("setDataSource. Datasource: " + (dataSource != null));
-		jdbcTemplateObject = new JdbcTemplate(dataSource);
-	}
-
-	public JdbcTemplate getJdbcTemplate(){
-		return jdbcTemplateObject;
-	}
+public class StatisticsQueries extends DAO  implements StatisticsDAO{
 	
 	public Long getMinTime(long sessionID) {
 		

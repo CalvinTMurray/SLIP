@@ -1,7 +1,11 @@
 package main;
 
+import dataAccessLayer.DAO;
+import di.configuration.DIConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 import statistics.StatisticsThread;
@@ -11,6 +15,10 @@ import statistics.StatisticsThread;
 public class Application {
 
     public static void main(String[] args) {
+
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(DIConfiguration.class);
+        ctx.getBean(DAO.class);
+
     	Thread statisticsThread = new Thread (StatisticsThread.getInstance());
     	statisticsThread.start();
     	
