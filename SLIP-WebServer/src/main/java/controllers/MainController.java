@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import statistics.Statistics;
-import statistics.StatisticsThread;
+import statistics.SessionStatisticsManager;
 
 import java.util.List;
 
@@ -69,13 +69,13 @@ public class MainController {
 
 		if (suggestedSessionID < 0) {
 			sessionID = new SessionID(sessionPayloadQueries.getNewSessionID());
-			StatisticsThread.getInstance().addSession(sessionID.sessionID);
+			SessionStatisticsManager.getInstance().addSession(sessionID.sessionID);
 
 			System.out
 					.println("Issuing new Session ID: " + sessionID.sessionID);
 		} else {
 			sessionID = new SessionID(suggestedSessionID);
-			StatisticsThread.getInstance().addSession(sessionID.sessionID);
+			SessionStatisticsManager.getInstance().addSession(sessionID.sessionID);
 			System.out.println("Issuing the previous Session ID: "
 					+ sessionID.sessionID);
 		}
@@ -85,7 +85,7 @@ public class MainController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/end-session", produces = { "application/json" })
 	public void endSessionID() {
-		StatisticsThread.getInstance().terminateAllSessions();
+		SessionStatisticsManager.getInstance().terminateAllSessions();
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/ping", headers = { "Content-type=application/json" }, produces = { "application/json" })
@@ -102,7 +102,7 @@ public class MainController {
 		System.out.println("Getting statistics for session " + sessionID
 				+ " and chart " + type);
 
-		Statistics statistics = StatisticsThread.getInstance().getStatistics(sessionID);
+		Statistics statistics = SessionStatisticsManager.getInstance().getStatistics(sessionID);
 
 		if (statistics == null) {
 			// Empty list if we don't have any statistics yet

@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
-import statistics.StatisticsThread;
+import statistics.SessionStatisticsManager;
 
 @ComponentScan({"main", "receivedAppData", "controllers", "integrationOne", "receivedAppData", "di.configuration", "dataAccessLayer", "statistics"})
 @EnableAutoConfiguration
@@ -19,7 +19,7 @@ public class Application {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(DIConfiguration.class);
         ctx.getBean(DAO.class);
 
-    	Thread statisticsThread = new Thread (StatisticsThread.getInstance());
+    	Thread statisticsThread = new Thread (SessionStatisticsManager.getInstance());
     	statisticsThread.start();
     	
         SpringApplication.run(Application.class, args);

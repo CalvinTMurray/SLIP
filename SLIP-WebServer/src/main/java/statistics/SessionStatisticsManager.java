@@ -22,12 +22,12 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * @author Calvin.T.Murray
  *
  */
-public class StatisticsThread implements Runnable {
+public class SessionStatisticsManager implements Runnable {
 	
 	// Automatic dependency injection on the statisticsQueries
 	public static StatisticsDAO statisticsQueries = new StatisticsQueries();
 
-	private static StatisticsThread instance;
+	private static SessionStatisticsManager instance;
 	
 	private Queue<Long> newSessions;
 	private Map<Long, Statistics> pendingSessions;
@@ -36,7 +36,7 @@ public class StatisticsThread implements Runnable {
 	private final String basePathStatistics = "C:/Users/Calvin . T . Murray/Documents/GitHub/SLIP/SLIP-WebServer/serialized/statistics/";
 	private Map<Long,Statistics> loadedStatistics;
 	
-	private StatisticsThread() {
+	private SessionStatisticsManager() {
 		newSessions = new ConcurrentLinkedQueue<Long>();
 		pendingSessions = new ConcurrentHashMap<Long, Statistics>();
 		completedSessions = new ConcurrentHashMap<Long, Statistics>();
@@ -44,11 +44,11 @@ public class StatisticsThread implements Runnable {
 		loadedStatistics = new ConcurrentHashMap<Long, Statistics>();
 	}
 	
-	public static StatisticsThread getInstance() {
+	public static SessionStatisticsManager getInstance() {
 		if (instance != null) {
 			return instance;
 		} else {
-			instance = new StatisticsThread();
+			instance = new SessionStatisticsManager();
 			return instance;
 		}
 	}

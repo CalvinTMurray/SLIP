@@ -15,7 +15,7 @@ public class DAO {
     protected static JdbcTemplate jdbcTemplateObject;
 
     @Autowired
-    public void setDataSource(DataSource dataSource) {
+    private void setDataSource(DataSource dataSource) {
 
         System.out.println("setDataSource. Datasource: " + (dataSource != null));
         jdbcTemplateObject = new JdbcTemplate(dataSource);
