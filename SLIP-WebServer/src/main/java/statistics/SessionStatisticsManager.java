@@ -6,11 +6,14 @@ package statistics;
 import charts.DistancePlot;
 import charts.HeatmapPlot;
 import charts.HighChartScatterPlot;
+import com.sun.corba.se.spi.activation.RepositoryOperations;
 import dataAccessLayer.StatisticsDAO;
 import dataAccessLayer.StatisticsQueries;
+import javafx.geometry.Pos;
 import org.springframework.util.StopWatch;
 import statistics.Time.TimeValue;
 
+import javax.swing.text.Position;
 import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
@@ -62,7 +65,9 @@ public class SessionStatisticsManager implements Runnable {
 				Long sessionID;
 				while ((sessionID = newSessions.poll()) != null) {
 					System.out.println("Initialising statistics for SessionID: " + sessionID);
-					pendingSessions.put(sessionID, new Statistics(sessionID));
+					if (!pendingSessions.containsKey(sessionID)) {
+						pendingSessions.put(sessionID, new Statistics(sessionID));
+					}
 				}
 
 			}
@@ -115,29 +120,42 @@ public class SessionStatisticsManager implements Runnable {
 
 		List<Long> timeSlices = Time.getTimeSlice(TimeValue.SECONDS, startTime, endTime);
 		List<PositionPoint> points = new ArrayList<PositionPoint>();
-		
+
+		// NEW CODE STARTS
+		PositionPoint[] data = new PositionPoint[0];
+		data = statisticsQueries.getPoints(sessionID).toArray(data);
+		// NEW CODE ENDS
+
 		System.out.println("Size of timeSlices: " + timeSlices.size());
 		System.out.println("SessionID: " + sessionID);
 		System.out.println("startTime: " + startTime);
 		System.out.println("endTime: " + endTime);
 
-		for (int i = 0; i < timeSlices.size(); i++) {
-			PositionPoint point;
-			long currentTimeSlice = timeSlices.get(i);
+		System.out.println("length of data: " + data.length);
 
-
-			if (i == 0 && timeSlices.size() == 1) { // At the start and there is only one point
-				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, currentTimeSlice, currentTimeSlice);
-			} else if (i == timeSlices.size() - 1) { // At the end
-				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), endTime);
-			} else if (i == 0) { // At the start with time slices still to process
-				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, 0, timeSlices.get(i+1));
-			} else { // Processing points somewhere in the middle
-				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), timeSlices.get(i + 1));
-			}
-
-			points.add(point);
+		// NEW CODE STARTS
+		for (Long timeSlice : timeSlices) {
+			points.add(closestValueBinarySearch(data, timeSlice, TimeValue.SECONDS));
 		}
+		// NEW CODE ENDS
+
+//		for (int i = 0; i < timeSlices.size(); i++) {
+//			PositionPoint point;
+//			long currentTimeSlice = timeSlices.get(i);
+//
+//
+//			if (i == 0 && timeSlices.size() == 1) { // At the start and there is only one point
+//				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, currentTimeSlice, currentTimeSlice);
+//			} else if (i == timeSlices.size() - 1) { // At the end
+//				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), endTime);
+//			} else if (i == 0) { // At the start with time slices still to process
+//				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, 0, timeSlices.get(i+1));
+//			} else { // Processing points somewhere in the middle
+//				point = statisticsQueries.getClosestPoint(sessionID, currentTimeSlice, timeSlices.get(i - 1), timeSlices.get(i + 1));
+//			}
+//
+//			points.add(point);
+//		}
 
 		statistics.addChart(new HighChartScatterPlot(sessionID, points));
 		statistics.addChart(new DistancePlot(sessionID, points));
@@ -153,19 +171,19 @@ public class SessionStatisticsManager implements Runnable {
 	 * @param sessionID the session ID of a game
 	 */
 	public void addSession(long sessionID) {
-		newSessions.add(sessionID);
+		if (!newSessions.contains(sessionID)) {
+			newSessions.add(sessionID);
+		}
 	}
 	
 	/**
 	 * Inform the statistics thread that it can perform statistical processing on the specified session
 	 * @param sessionID the session ID of the game which has been completed
 	 */
-	public void addSessionTerminated(long sessionID) {
+	public void terminateSession(long sessionID) {
 		
-		synchronized (pendingSessions) {
-			completedSessions.put(sessionID, pendingSessions.get(sessionID));
-		}
-		
+		completedSessions.put(sessionID, pendingSessions.remove(sessionID));
+
 	}
 	
 	/**
@@ -247,6 +265,47 @@ public class SessionStatisticsManager implements Runnable {
 		}
 		
 		loadedStatistics.put(sessionID, statistics);
+	}
+
+	/**
+	 * Modified binary search algorithm which find the closest value to the specified key
+	 * @param a
+	 * @param key
+	 * @param interval
+	 * @return
+	 */
+	public static PositionPoint closestValueBinarySearch(PositionPoint[] a, long key, long interval) {
+
+		int lowIndex = 0;
+		int highIndex = a.length - 1;
+		int mid = (lowIndex + highIndex)/2;
+
+		// Binary search (mid should be index to insert value at
+		while (lowIndex < highIndex) {
+
+			if (a[mid].timestamp == key) {
+				return a[mid];
+			} else if (a[mid].timestamp > key) {
+				highIndex = mid;
+			} else if (a[mid].timestamp < key) {
+				lowIndex = mid + 1;
+			}
+
+			mid = (lowIndex + highIndex)/2;
+		}
+
+		// Interval check
+		if (mid > 0 && mid < a.length && (key - interval <= a[mid - 1].timestamp || key + interval >= a[mid].timestamp)) {
+
+			// Closest Value
+			if ((key - a[mid-1].timestamp) < (a[mid].timestamp - key)) {
+				return a[mid-1];
+			} else {
+				return a[mid];
+			}
+		}
+
+		return new PositionPoint(key, null, null);
 	}
 	
 }

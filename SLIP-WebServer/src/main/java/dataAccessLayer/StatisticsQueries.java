@@ -1,11 +1,13 @@
 package dataAccessLayer;
 
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import statistics.PositionPoint;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class StatisticsQueries extends DAO  implements StatisticsDAO{
 	
@@ -70,5 +72,20 @@ public class StatisticsQueries extends DAO  implements StatisticsDAO{
 		}
 		
 		return point;
-	}	
+	}
+
+	@Override
+	public List<PositionPoint> getPoints(long sessionID) {
+
+		String sql = 	"SELECT *" +
+						"FROM \"SessionPayload\"" +
+						"WHERE \"SessionID\" = ?";
+
+		return jdbcTemplateObject.query(sql, new Object[]{sessionID}, new RowMapper<PositionPoint>() {
+			@Override
+			public PositionPoint mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new PositionPoint(rs.getLong("Timestamp"), rs.getInt("xPosition"), rs.getInt("yPosition"));
+			}
+		});
+	}
 }
