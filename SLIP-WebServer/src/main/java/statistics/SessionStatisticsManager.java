@@ -27,7 +27,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class SessionStatisticsManager implements Runnable {
 	
-	// Automatic dependency injection on the statisticsQueries
 	public static StatisticsDAO statisticsQueries = new StatisticsQueries();
 
 	private static SessionStatisticsManager instance;
@@ -131,11 +130,9 @@ public class SessionStatisticsManager implements Runnable {
 		System.out.println("startTime: " + startTime);
 		System.out.println("endTime: " + endTime);
 
-		System.out.println("length of data: " + data.length);
-
 		// NEW CODE STARTS
 		for (Long timeSlice : timeSlices) {
-			points.add(closestValueBinarySearch(data, timeSlice, TimeValue.SECONDS));
+			points.add(closestValueBinarySearch(data, timeSlice, (TimeValue.SECONDS)/2));
 		}
 		// NEW CODE ENDS
 
@@ -295,14 +292,15 @@ public class SessionStatisticsManager implements Runnable {
 		}
 
 		// Interval check
-		if (mid > 0 && mid < a.length && (key - interval <= a[mid - 1].timestamp || key + interval >= a[mid].timestamp)) {
+		if (mid > 0 && mid < a.length && ((key - interval) <= a[mid].timestamp || (key + interval) >= a[mid + 1].timestamp)) {
 
 			// Closest Value
-			if ((key - a[mid-1].timestamp) < (a[mid].timestamp - key)) {
-				return a[mid-1];
-			} else {
+			if ((key - a[mid].timestamp) < (a[mid + 1].timestamp - key)) {
 				return a[mid];
+			} else {
+				return a[mid + 1];
 			}
+
 		}
 
 		return new PositionPoint(key, null, null);
