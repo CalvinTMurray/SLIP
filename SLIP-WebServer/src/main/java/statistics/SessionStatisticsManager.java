@@ -276,8 +276,6 @@ public class SessionStatisticsManager implements Runnable {
 	 */
 	public static PositionPoint closestValueBinarySearch(PositionPoint[] a, long key, long interval) {
 
-		System.out.println("the key is: " + key + " " + a[0].timestamp + " " + a[0]);
-
 		int lowIndex = 0;
 		int highIndex = a.length - 1;
 		int mid = (lowIndex + highIndex)/2;
@@ -307,7 +305,6 @@ public class SessionStatisticsManager implements Runnable {
 			}
 		}
 
-		System.out.println("No position point found from binary search");
 		return new PositionPoint(key, null, null);
 	}
 	
