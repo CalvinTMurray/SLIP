@@ -1,5 +1,6 @@
 $(document).ready(
 
+	$(function() {
 		$('#playbackGraphContainer').highcharts(
 			{
 				chart : {
