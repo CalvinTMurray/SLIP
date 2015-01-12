@@ -1,6 +1,12 @@
 $(document).ready(
 
 	$(function() {
+
+		// Always display the tooltip for playback graph
+		(function (H) {
+            H.wrap(H.Tooltip.prototype, 'hide', function () {});
+        }(Highcharts));
+
 		$('#playbackGraphContainer').highcharts(
 			{
 				chart : {

@@ -16,6 +16,7 @@ $(document).ready(function() {
 
 			chart.series[0].data[0].update(points[slideEvt.value].position);
 			chart.series[0].show();
+			chart.tooltip.refresh(chart.series[0].points[0]); //Refresh the tooltip
 		} else {
 			chart.series[0].data[0].update({
 				marker:{
