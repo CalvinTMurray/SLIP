@@ -27,7 +27,7 @@ public class MainController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/server-frame", headers = { "Content-type=application/json" }, produces = { "application/json" })
-	public @ResponseBody String sframe(@RequestBody ServerFrame frame) {
+	public @ResponseBody String insertServerFrame(@RequestBody ServerFrame frame) {
 		sessionPayloadQueries.insertFrame(frame);
 
 		return "Post for server-frame handled";
